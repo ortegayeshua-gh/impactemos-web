@@ -140,7 +140,7 @@ export default function App() {
               <span className="text-blue-400">Instagram: @impactemosmx</span>[cite: 2]
               <span className="text-blue-400">Facebook: @impactemosmx</span>[cite: 2]
             </div>
-            <p className="text-xs text-gray-500 mt-6">&copy; 2027 Impactemos México A.C. Todos los derechos reservados.</p>
+            <p className="text-xs text-gray-500  mt-6">&copy; 2027 Impactemos México A.C. Todos los derechos reservados.</p>
           </div>
         </div>
       </footer>
