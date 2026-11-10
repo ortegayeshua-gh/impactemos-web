@@ -1,14 +1,24 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import logoPrincipal from './assets/logo-impactemos.png';
 import logoEje1 from './assets/logo-eje1.png';
 import logoEje2 from './assets/logo-eje2.png';
 import logoEje3 from './assets/logo-eje3.png';
 import logoEje4 from './assets/logo-eje4.png';
+import logoCorazon from './assets/corazon.png';
 
 export default function App() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [activeTab, setActiveTab] = useState('todos');
+
+  // Actualiza dinámicamente el favicon con la imagen de corazon.png
+  useEffect(() => {
+    const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
+    link.type = 'image/png';
+    link.rel = 'icon';
+    link.href = logoCorazon;
+    document.getElementsByTagName('head')[0].appendChild(link);
+  }, []);
 
   const handleOpenModal = (title) => {
     setModalTitle(title);
@@ -270,7 +280,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 5. Sección de Contacto (Con dirección ajustada sin calle ni número) */}
+      {/* 5. Sección de Contacto (Dirección sin calle ni número) */}
       <section id="contacto" className="py-28 px-6 max-w-7xl mx-auto">
         <div className="grid md:grid-cols-2 gap-16 items-center">
           <div>
