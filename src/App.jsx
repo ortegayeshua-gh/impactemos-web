@@ -91,7 +91,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 3. Sección de 'Quiénes Somos' + Socios Fundadores con Fotos Grandes e Innovadoras */}
+      {/* 3. Sección de 'Quiénes Somos' + Socios Fundadores */}
       <section id="quienes-somos" className="py-28 px-6 max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-blue-600 font-bold text-sm tracking-widest uppercase bg-blue-50 px-3.5 py-1 rounded-full">Institucional</span>
@@ -102,7 +102,6 @@ export default function App() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8 items-stretch mb-24">
-          {/* Misión */}
           <div className="bg-white p-8 sm:p-10 rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 flex flex-col justify-between hover:shadow-2xl transition-shadow duration-300">
             <div>
               <div className="w-14 h-14 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-2xl mb-6 shadow-xs">
@@ -118,7 +117,6 @@ export default function App() {
             </div>
           </div>
 
-          {/* Visión */}
           <div className="bg-gradient-to-br from-slate-900 to-blue-950 text-white p-8 sm:p-10 rounded-3xl shadow-xl flex flex-col justify-between hover:shadow-2xl transition-shadow duration-300">
             <div>
               <div className="w-14 h-14 rounded-2xl bg-white/10 text-teal-400 flex items-center justify-center text-2xl mb-6 backdrop-blur-md shadow-xs">
@@ -135,7 +133,7 @@ export default function App() {
           </div>
         </div>
 
-        {/* Socios Fundadores con Diseño Innovador y Fotos Grandes */}
+        {/* Socios Fundadores */}
         <div className="mt-16">
           <div className="text-center mb-16">
             <span className="text-teal-600 font-bold text-sm tracking-widest uppercase bg-teal-50 px-3.5 py-1 rounded-full">Liderazgo</span>
@@ -144,7 +142,6 @@ export default function App() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-10">
-            {/* Yeshua Guillermo Ortega Durán */}
             <div className="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden group hover:shadow-2xl transition-all duration-300 flex flex-col justify-between">
               <div className="p-8 sm:p-10 text-center">
                 <div className="relative w-40 h-40 mx-auto mb-6">
@@ -174,7 +171,6 @@ export default function App() {
               </div>
             </div>
 
-            {/* Kevin Alexander Flores Parra */}
             <div className="bg-white rounded-3xl shadow-xl border border-slate-100 overflow-hidden group hover:shadow-2xl transition-all duration-300 flex flex-col justify-between">
               <div className="p-8 sm:p-10 text-center">
                 <div className="relative w-40 h-40 mx-auto mb-6">
@@ -207,7 +203,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 4. Sección de 'Nuestros Cuatro Ejes Operativos' con Redes Sociales Distribuidas */}
+      {/* 4. Sección de 'Nuestros Cuatro Ejes Operativos' con distribución dinámica de redes a la derecha */}
       <section id="ejes" className="py-28 bg-slate-100/70 px-6 border-y border-slate-200/60">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -217,7 +213,7 @@ export default function App() {
               Cada programa cuenta con su propia identidad gráfica y enfoque especializado de intervención.
             </p>
 
-            {/* Filtros */}
+            {/* Filtros Superiores */}
             <div className="flex flex-wrap justify-center gap-2 mt-8">
               <button 
                 onClick={() => setActiveTab('todos')} 
@@ -252,41 +248,21 @@ export default function App() {
             </div>
           </div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {/* Eje 1 */}
-            {(activeTab === 'todos' || activeTab === 'eje1') && (
+          {/* Vista cuando se selecciona "Todos" */}
+          {activeTab === 'todos' && (
+            <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+              {/* Eje 1 */}
               <div className="group bg-white rounded-3xl p-8 shadow-xl shadow-slate-200/50 border-t-8 border-teal-400 flex flex-col justify-between transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
                 <div>
                   <div className="h-28 w-full flex items-center justify-center mb-6 p-2 bg-slate-50 rounded-2xl group-hover:bg-teal-50/40 transition-colors duration-300">
                     <img src={logoEje1} alt="Juntos Somos Más" className="max-h-20 w-auto object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy" />
                   </div>
-                  <span className="text-xs font-black uppercase tracking-widest text-teal-700 bg-teal-50 px-3.5 py-1 rounded-full mb-3 inline-block">
-                    Eje 01
-                  </span>
+                  <span className="text-xs font-black uppercase tracking-widest text-teal-700 bg-teal-50 px-3.5 py-1 rounded-full mb-3 inline-block">Eje 01</span>
                   <h3 className="text-xl font-bold text-slate-900 mb-1">Juntos Somos Más</h3>
                   <p className="text-xs font-semibold text-teal-600 mb-4">Asistencia Social y Apoyo Comunitario</p>
                   <p className="text-slate-600 text-sm mb-6 leading-relaxed">
                     Centros de acopio, entrega de apoyos alimentarios, brigadas asistenciales y comunitarias para grupos vulnerables.
                   </p>
-
-                  {/* Redes Sociales en Cuadros Independientes */}
-                  <div className="space-y-3 mb-6">
-                    <div className="bg-teal-50/70 p-3.5 rounded-2xl border border-teal-100 text-center">
-                      <p className="font-bold text-xs text-teal-900 mb-1">Instagram</p>
-                      <p className="text-[11px] text-slate-600 mb-2 italic">"Suma esperanza con nosotros"</p>
-                      <a href="https://www.instagram.com/juntossomosmasmexico" target="_blank" rel="noopener noreferrer" className="inline-block bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition-colors">Visitar perfil</a>
-                    </div>
-                    <div className="bg-teal-50/70 p-3.5 rounded-2xl border border-teal-100 text-center">
-                      <p className="font-bold text-xs text-teal-900 mb-1">TikTok</p>
-                      <p className="text-[11px] text-slate-600 mb-2 italic">"Vive nuestras brigadas"</p>
-                      <a href="https://www.tiktok.com/@juntossomosmasmexico" target="_blank" rel="noopener noreferrer" className="inline-block bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition-colors">Visitar perfil</a>
-                    </div>
-                    <div className="bg-teal-50/70 p-3.5 rounded-2xl border border-teal-100 text-center">
-                      <p className="font-bold text-xs text-teal-900 mb-1">Facebook</p>
-                      <p className="text-[11px] text-slate-600 mb-2 italic">"Únete a la comunidad"</p>
-                      <a href="https://www.facebook.com/JuntosSomosMasMexico" target="_blank" rel="noopener noreferrer" className="inline-block bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition-colors">Visitar perfil</a>
-                    </div>
-                  </div>
                 </div>
                 <button 
                   onClick={() => handleOpenModal('Juntos Somos Más (Asistencia Social)')}
@@ -295,42 +271,19 @@ export default function App() {
                   Ver Actividades
                 </button>
               </div>
-            )}
 
-            {/* Eje 2 */}
-            {(activeTab === 'todos' || activeTab === 'eje2') && (
+              {/* Eje 2 */}
               <div className="group bg-white rounded-3xl p-8 shadow-xl shadow-slate-200/50 border-t-8 border-lime-500 flex flex-col justify-between transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
                 <div>
                   <div className="h-28 w-full flex items-center justify-center mb-6 p-2 bg-slate-50 rounded-2xl group-hover:bg-lime-50/40 transition-colors duration-300">
                     <img src={logoEje2} alt="EcoImpacto México" className="max-h-20 w-auto object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy" />
                   </div>
-                  <span className="text-xs font-black uppercase tracking-widest text-lime-700 bg-lime-50 px-3.5 py-1 rounded-full mb-3 inline-block">
-                    Eje 02
-                  </span>
+                  <span className="text-xs font-black uppercase tracking-widest text-lime-700 bg-lime-50 px-3.5 py-1 rounded-full mb-3 inline-block">Eje 02</span>
                   <h3 className="text-xl font-bold text-slate-900 mb-1">EcoImpacto México</h3>
                   <p className="text-xs font-semibold text-lime-600 mb-4">Medio Ambiente y Sustentabilidad</p>
                   <p className="text-slate-600 text-sm mb-6 leading-relaxed">
                     Jornadas de reforestación urbana, talleres de educación ambiental, huertos urbanos y recuperación de espacios públicos.
                   </p>
-
-                  {/* Redes Sociales en Cuadros Independientes */}
-                  <div className="space-y-3 mb-6">
-                    <div className="bg-lime-50/70 p-3.5 rounded-2xl border border-lime-100 text-center">
-                      <p className="font-bold text-xs text-lime-900 mb-1">Instagram</p>
-                      <p className="text-[11px] text-slate-600 mb-2 italic">"Por un futuro más verde"</p>
-                      <a href="https://www.instagram.com/ecoimpacto.mx" target="_blank" rel="noopener noreferrer" className="inline-block bg-lime-600 hover:bg-lime-700 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition-colors">Visitar perfil</a>
-                    </div>
-                    <div className="bg-lime-50/70 p-3.5 rounded-2xl border border-lime-100 text-center">
-                      <p className="font-bold text-xs text-lime-900 mb-1">TikTok</p>
-                      <p className="text-[11px] text-slate-600 mb-2 italic">"Acciones por el planeta"</p>
-                      <a href="https://www.tiktok.com/@ecoimpactomx" target="_blank" rel="noopener noreferrer" className="inline-block bg-lime-600 hover:bg-lime-700 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition-colors">Visitar perfil</a>
-                    </div>
-                    <div className="bg-lime-50/70 p-3.5 rounded-2xl border border-lime-100 text-center">
-                      <p className="font-bold text-xs text-lime-900 mb-1">Facebook</p>
-                      <p className="text-[11px] text-slate-600 mb-2 italic">"Conecta con la ecología"</p>
-                      <a href="https://www.facebook.com/ecoimpacto.mx" target="_blank" rel="noopener noreferrer" className="inline-block bg-lime-600 hover:bg-lime-700 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition-colors">Visitar perfil</a>
-                    </div>
-                  </div>
                 </div>
                 <button 
                   onClick={() => handleOpenModal('EcoImpacto México (Medio Ambiente)')}
@@ -339,42 +292,19 @@ export default function App() {
                   Ver Actividades
                 </button>
               </div>
-            )}
 
-            {/* Eje 3 */}
-            {(activeTab === 'todos' || activeTab === 'eje3') && (
+              {/* Eje 3 */}
               <div className="group bg-white rounded-3xl p-8 shadow-xl shadow-slate-200/50 border-t-8 border-orange-500 flex flex-col justify-between transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
                 <div>
                   <div className="h-28 w-full flex items-center justify-center mb-6 p-2 bg-slate-50 rounded-2xl group-hover:bg-orange-50/40 transition-colors duration-300">
                     <img src={logoEje3} alt="Zoolidario México" className="max-h-20 w-auto object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy" />
                   </div>
-                  <span className="text-xs font-black uppercase tracking-widest text-orange-700 bg-orange-50 px-3.5 py-1 rounded-full mb-3 inline-block">
-                    Eje 03
-                  </span>
+                  <span className="text-xs font-black uppercase tracking-widest text-orange-700 bg-orange-50 px-3.5 py-1 rounded-full mb-3 inline-block">Eje 03</span>
                   <h3 className="text-xl font-bold text-slate-900 mb-1">Zoolidario México</h3>
                   <p className="text-xs font-semibold text-orange-600 mb-4">Cuidado y Bienestar Animal</p>
                   <p className="text-slate-600 text-sm mb-6 leading-relaxed">
                     Campañas de concientización sobre tenencia responsable, fomento a la adopción, rescate animal y salud preventiva.
                   </p>
-
-                  {/* Redes Sociales en Cuadros Independientes */}
-                  <div className="space-y-3 mb-6">
-                    <div className="bg-orange-50/70 p-3.5 rounded-2xl border border-orange-100 text-center">
-                      <p className="font-bold text-xs text-orange-900 mb-1">Instagram</p>
-                      <p className="text-[11px] text-slate-600 mb-2 italic">"Dales una voz y un hogar"</p>
-                      <a href="https://www.instagram.com/zoolidariomx" target="_blank" rel="noopener noreferrer" className="inline-block bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition-colors">Visitar perfil</a>
-                    </div>
-                    <div className="bg-orange-50/70 p-3.5 rounded-2xl border border-orange-100 text-center">
-                      <p className="font-bold text-xs text-orange-900 mb-1">TikTok</p>
-                      <p className="text-[11px] text-slate-600 mb-2 italic">"Historias que transforman"</p>
-                      <a href="https://www.tiktok.com/@zoolidariomx" target="_blank" rel="noopener noreferrer" className="inline-block bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition-colors">Visitar perfil</a>
-                    </div>
-                    <div className="bg-orange-50/70 p-3.5 rounded-2xl border border-orange-100 text-center">
-                      <p className="font-bold text-xs text-orange-900 mb-1">Facebook</p>
-                      <p className="text-[11px] text-slate-600 mb-2 italic">"Amor y respeto animal"</p>
-                      <a href="https://www.facebook.com/zoolidariomx" target="_blank" rel="noopener noreferrer" className="inline-block bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition-colors">Visitar perfil</a>
-                    </div>
-                  </div>
                 </div>
                 <button 
                   onClick={() => handleOpenModal('Zoolidario México (Bienestar Animal)')}
@@ -383,42 +313,19 @@ export default function App() {
                   Ver Actividades
                 </button>
               </div>
-            )}
 
-            {/* Eje 4 */}
-            {(activeTab === 'todos' || activeTab === 'eje4') && (
+              {/* Eje 4 */}
               <div className="group bg-white rounded-3xl p-8 shadow-xl shadow-slate-200/50 border-t-8 border-blue-600 flex flex-col justify-between transform transition-all duration-300 hover:-translate-y-2 hover:shadow-2xl">
                 <div>
                   <div className="h-28 w-full flex items-center justify-center mb-6 p-2 bg-slate-50 rounded-2xl group-hover:bg-blue-50/40 transition-colors duration-300">
                     <img src={logoEje4} alt="Red de Líderes" className="max-h-20 w-auto object-contain group-hover:scale-105 transition-transform duration-300" loading="lazy" />
                   </div>
-                  <span className="text-xs font-black uppercase tracking-widest text-blue-700 bg-blue-50 px-3.5 py-1 rounded-full mb-3 inline-block">
-                    Eje 04
-                  </span>
+                  <span className="text-xs font-black uppercase tracking-widest text-blue-700 bg-blue-50 px-3.5 py-1 rounded-full mb-3 inline-block">Eje 04</span>
                   <h3 className="text-xl font-bold text-slate-900 mb-1">Red de Líderes</h3>
                   <p className="text-xs font-semibold text-blue-600 mb-4">Liderazgo Juvenil y Participación Cívica</p>
                   <p className="text-slate-600 text-sm mb-6 leading-relaxed">
                     Talleres de formación cívica, capacitación tecnológica y digital, foros ciudadanos y proyectos comunitarios juveniles.
                   </p>
-
-                  {/* Redes Sociales en Cuadros Independientes */}
-                  <div className="space-y-3 mb-6">
-                    <div className="bg-blue-50/70 p-3.5 rounded-2xl border border-blue-100 text-center">
-                      <p className="font-bold text-xs text-blue-900 mb-1">Instagram</p>
-                      <p className="text-[11px] text-slate-600 mb-2 italic">"Inspira el cambio social"</p>
-                      <a href="https://www.instagram.com/redlideresmexico" target="_blank" rel="noopener noreferrer" className="inline-block bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition-colors">Visitar perfil</a>
-                    </div>
-                    <div className="bg-blue-50/70 p-3.5 rounded-2xl border border-blue-100 text-center">
-                      <p className="font-bold text-xs text-blue-900 mb-1">TikTok</p>
-                      <p className="text-[11px] text-slate-600 mb-2 italic">"Liderazgo en acción"</p>
-                      <a href="https://www.tiktok.com/@redlideresmexico" target="_blank" rel="noopener noreferrer" className="inline-block bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition-colors">Visitar perfil</a>
-                    </div>
-                    <div className="bg-blue-50/70 p-3.5 rounded-2xl border border-blue-100 text-center">
-                      <p className="font-bold text-xs text-blue-900 mb-1">Facebook</p>
-                      <p className="text-[11px] text-slate-600 mb-2 italic">"Comunidad de líderes"</p>
-                      <a href="https://www.facebook.com/redlideresmexico" target="_blank" rel="noopener noreferrer" className="inline-block bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold px-3 py-1.5 rounded-xl transition-colors">Visitar perfil</a>
-                    </div>
-                  </div>
                 </div>
                 <button 
                   onClick={() => handleOpenModal('Red de Líderes México (Participación Cívica)')}
@@ -427,12 +334,192 @@ export default function App() {
                   Ver Actividades
                 </button>
               </div>
-            )}
-          </div>
+            </div>
+          )}
+
+          {/* Vista Eje 1 seleccionado */}
+          {activeTab === 'eje1' && (
+            <div className="grid lg:grid-cols-3 gap-8 items-start">
+              <div className="bg-white rounded-3xl p-8 shadow-xl border-t-8 border-teal-400 flex flex-col justify-between">
+                <div>
+                  <div className="h-28 w-full flex items-center justify-center mb-6 p-2 bg-slate-50 rounded-2xl">
+                    <img src={logoEje1} alt="Juntos Somos Más" className="max-h-20 w-auto object-contain" loading="lazy" />
+                  </div>
+                  <span className="text-xs font-black uppercase tracking-widest text-teal-700 bg-teal-50 px-3.5 py-1 rounded-full mb-3 inline-block">Eje 01</span>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-1">Juntos Somos Más</h3>
+                  <p className="text-xs font-semibold text-teal-600 mb-4">Asistencia Social y Apoyo Comunitario</p>
+                  <p className="text-slate-600 text-sm mb-6 leading-relaxed">
+                    Centros de acopio, entrega de apoyos alimentarios, brigadas asistenciales y comunitarias para grupos vulnerables.
+                  </p>
+                </div>
+                <button onClick={() => handleOpenModal('Juntos Somos Más (Asistencia Social)')} className="w-full bg-teal-50 hover:bg-teal-100 text-teal-800 font-semibold py-3 rounded-xl text-sm transition-colors duration-200">
+                  Ver Actividades
+                </button>
+              </div>
+              <div className="lg:col-span-2 grid sm:grid-cols-3 gap-4">
+                <div className="bg-white p-6 rounded-3xl shadow-xl border border-teal-100 flex flex-col justify-between text-center">
+                  <div>
+                    <h4 className="font-black text-slate-900 mb-2">Instagram</h4>
+                    <p className="text-xs text-slate-600 italic mb-4">"Suma esperanza con nosotros y transforma vidas."</p>
+                  </div>
+                  <a href="https://www.instagram.com/juntossomosmasmexico" target="_blank" rel="noopener noreferrer" className="bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-colors">Visitar perfil</a>
+                </div>
+                <div className="bg-white p-6 rounded-3xl shadow-xl border border-teal-100 flex flex-col justify-between text-center">
+                  <div>
+                    <h4 className="font-black text-slate-900 mb-2">TikTok</h4>
+                    <p className="text-xs text-slate-600 italic mb-4">"Vive nuestras brigadas de cerca y sé parte del cambio."</p>
+                  </div>
+                  <a href="https://www.tiktok.com/@juntossomosmasmexico" target="_blank" rel="noopener noreferrer" className="bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-colors">Visitar perfil</a>
+                </div>
+                <div className="bg-white p-6 rounded-3xl shadow-xl border border-teal-100 flex flex-col justify-between text-center">
+                  <div>
+                    <h4 className="font-black text-slate-900 mb-2">Facebook</h4>
+                    <p className="text-xs text-slate-600 italic mb-4">"Únete a nuestra gran comunidad solidaria en Tijuana."</p>
+                  </div>
+                  <a href="https://www.facebook.com/JuntosSomosMasMexico" target="_blank" rel="noopener noreferrer" className="bg-teal-600 hover:bg-teal-700 text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-colors">Visitar perfil</a>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Vista Eje 2 seleccionado */}
+          {activeTab === 'eje2' && (
+            <div className="grid lg:grid-cols-3 gap-8 items-start">
+              <div className="bg-white rounded-3xl p-8 shadow-xl border-t-8 border-lime-500 flex flex-col justify-between">
+                <div>
+                  <div className="h-28 w-full flex items-center justify-center mb-6 p-2 bg-slate-50 rounded-2xl">
+                    <img src={logoEje2} alt="EcoImpacto México" className="max-h-20 w-auto object-contain" loading="lazy" />
+                  </div>
+                  <span className="text-xs font-black uppercase tracking-widest text-lime-700 bg-lime-50 px-3.5 py-1 rounded-full mb-3 inline-block">Eje 02</span>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-1">EcoImpacto México</h3>
+                  <p className="text-xs font-semibold text-lime-600 mb-4">Medio Ambiente y Sustentabilidad</p>
+                  <p className="text-slate-600 text-sm mb-6 leading-relaxed">
+                    Jornadas de reforestación urbana, talleres de educación ambiental, huertos urbanos y recuperación de espacios públicos.
+                  </p>
+                </div>
+                <button onClick={() => handleOpenModal('EcoImpacto México (Medio Ambiente)')} className="w-full bg-lime-50 hover:bg-lime-100 text-lime-800 font-semibold py-3 rounded-xl text-sm transition-colors duration-200">
+                  Ver Actividades
+                </button>
+              </div>
+              <div className="lg:col-span-2 grid sm:grid-cols-3 gap-4">
+                <div className="bg-white p-6 rounded-3xl shadow-xl border border-lime-100 flex flex-col justify-between text-center">
+                  <div>
+                    <h4 className="font-black text-slate-900 mb-2">Instagram</h4>
+                    <p className="text-xs text-slate-600 italic mb-4">"Por un futuro más verde y sustentable."</p>
+                  </div>
+                  <a href="https://www.instagram.com/ecoimpacto.mx" target="_blank" rel="noopener noreferrer" className="bg-lime-600 hover:bg-lime-700 text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-colors">Visitar perfil</a>
+                </div>
+                <div className="bg-white p-6 rounded-3xl shadow-xl border border-lime-100 flex flex-col justify-between text-center">
+                  <div>
+                    <h4 className="font-black text-slate-900 mb-2">TikTok</h4>
+                    <p className="text-xs text-slate-600 italic mb-4">"Acciones reales por nuestro planeta."</p>
+                  </div>
+                  <a href="https://www.tiktok.com/@ecoimpactomx" target="_blank" rel="noopener noreferrer" className="bg-lime-600 hover:bg-lime-700 text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-colors">Visitar perfil</a>
+                </div>
+                <div className="bg-white p-6 rounded-3xl shadow-xl border border-lime-100 flex flex-col justify-between text-center">
+                  <div>
+                    <h4 className="font-black text-slate-900 mb-2">Facebook</h4>
+                    <p className="text-xs text-slate-600 italic mb-4">"Conecta con la ecología y cuida tu entorno."</p>
+                  </div>
+                  <a href="https://www.facebook.com/ecoimpacto.mx" target="_blank" rel="noopener noreferrer" className="bg-lime-600 hover:bg-lime-700 text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-colors">Visitar perfil</a>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Vista Eje 3 seleccionado */}
+          {activeTab === 'eje3' && (
+            <div className="grid lg:grid-cols-3 gap-8 items-start">
+              <div className="bg-white rounded-3xl p-8 shadow-xl border-t-8 border-orange-500 flex flex-col justify-between">
+                <div>
+                  <div className="h-28 w-full flex items-center justify-center mb-6 p-2 bg-slate-50 rounded-2xl">
+                    <img src={logoEje3} alt="Zoolidario México" className="max-h-20 w-auto object-contain" loading="lazy" />
+                  </div>
+                  <span className="text-xs font-black uppercase tracking-widest text-orange-700 bg-orange-50 px-3.5 py-1 rounded-full mb-3 inline-block">Eje 03</span>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-1">Zoolidario México</h3>
+                  <p className="text-xs font-semibold text-orange-600 mb-4">Cuidado y Bienestar Animal</p>
+                  <p className="text-slate-600 text-sm mb-6 leading-relaxed">
+                    Campañas de concientización sobre tenencia responsable, fomento a la adopción, rescate animal y salud preventiva.
+                  </p>
+                </div>
+                <button onClick={() => handleOpenModal('Zoolidario México (Bienestar Animal)')} className="w-full bg-orange-50 hover:bg-orange-100 text-orange-800 font-semibold py-3 rounded-xl text-sm transition-colors duration-200">
+                  Ver Actividades
+                </button>
+              </div>
+              <div className="lg:col-span-2 grid sm:grid-cols-3 gap-4">
+                <div className="bg-white p-6 rounded-3xl shadow-xl border border-orange-100 flex flex-col justify-between text-center">
+                  <div>
+                    <h4 className="font-black text-slate-900 mb-2">Instagram</h4>
+                    <p className="text-xs text-slate-600 italic mb-4">"Dales una voz y un hogar lleno de amor."</p>
+                  </div>
+                  <a href="https://www.instagram.com/zoolidariomx" target="_blank" rel="noopener noreferrer" className="bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-colors">Visitar perfil</a>
+                </div>
+                <div className="bg-white p-6 rounded-3xl shadow-xl border border-orange-100 flex flex-col justify-between text-center">
+                  <div>
+                    <h4 className="font-black text-slate-900 mb-2">TikTok</h4>
+                    <p className="text-xs text-slate-600 italic mb-4">"Historias de rescate que transforman corazones."</p>
+                  </div>
+                  <a href="https://www.tiktok.com/@zoolidariomx" target="_blank" rel="noopener noreferrer" className="bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-colors">Visitar perfil</a>
+                </div>
+                <div className="bg-white p-6 rounded-3xl shadow-xl border border-orange-100 flex flex-col justify-between text-center">
+                  <div>
+                    <h4 className="font-black text-slate-900 mb-2">Facebook</h4>
+                    <p className="text-xs text-slate-600 italic mb-4">"Amor y respeto animal en cada acción."</p>
+                  </div>
+                  <a href="https://www.facebook.com/zoolidariomx" target="_blank" rel="noopener noreferrer" className="bg-orange-600 hover:bg-orange-700 text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-colors">Visitar perfil</a>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/* Vista Eje 4 seleccionado */}
+          {activeTab === 'eje4' && (
+            <div className="grid lg:grid-cols-3 gap-8 items-start">
+              <div className="bg-white rounded-3xl p-8 shadow-xl border-t-8 border-blue-600 flex flex-col justify-between">
+                <div>
+                  <div className="h-28 w-full flex items-center justify-center mb-6 p-2 bg-slate-50 rounded-2xl">
+                    <img src={logoEje4} alt="Red de Líderes" className="max-h-20 w-auto object-contain" loading="lazy" />
+                  </div>
+                  <span className="text-xs font-black uppercase tracking-widest text-blue-700 bg-blue-50 px-3.5 py-1 rounded-full mb-3 inline-block">Eje 04</span>
+                  <h3 className="text-2xl font-bold text-slate-900 mb-1">Red de Líderes</h3>
+                  <p className="text-xs font-semibold text-blue-600 mb-4">Liderazgo Juvenil y Participación Cívica</p>
+                  <p className="text-slate-600 text-sm mb-6 leading-relaxed">
+                    Talleres de formación cívica, capacitación tecnológica y digital, foros ciudadanos y proyectos comunitarios juveniles.
+                  </p>
+                </div>
+                <button onClick={() => handleOpenModal('Red de Líderes México (Participación Cívica)')} className="w-full bg-blue-50 hover:bg-blue-100 text-blue-800 font-semibold py-3 rounded-xl text-sm transition-colors duration-200">
+                  Ver Actividades
+                </button>
+              </div>
+              <div className="lg:col-span-2 grid sm:grid-cols-3 gap-4">
+                <div className="bg-white p-6 rounded-3xl shadow-xl border border-blue-100 flex flex-col justify-between text-center">
+                  <div>
+                    <h4 className="font-black text-slate-900 mb-2">Instagram</h4>
+                    <p className="text-xs text-slate-600 italic mb-4">"Inspira el cambio social desde la juventud."</p>
+                  </div>
+                  <a href="https://www.instagram.com/redlideresmexico" target="_blank" rel="noopener noreferrer" className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-colors">Visitar perfil</a>
+                </div>
+                <div className="bg-white p-6 rounded-3xl shadow-xl border border-blue-100 flex flex-col justify-between text-center">
+                  <div>
+                    <h4 className="font-black text-slate-900 mb-2">TikTok</h4>
+                    <p className="text-xs text-slate-600 italic mb-4">"Liderazgo en acción y participación cívica."</p>
+                  </div>
+                  <a href="https://www.tiktok.com/@redlideresmexico" target="_blank" rel="noopener noreferrer" className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-colors">Visitar perfil</a>
+                </div>
+                <div className="bg-white p-6 rounded-3xl shadow-xl border border-blue-100 flex flex-col justify-between text-center">
+                  <div>
+                    <h4 className="font-black text-slate-900 mb-2">Facebook</h4>
+                    <p className="text-xs text-slate-600 italic mb-4">"Comunidad de líderes comprometidos con México."</p>
+                  </div>
+                  <a href="https://www.facebook.com/redlideresmexico" target="_blank" rel="noopener noreferrer" className="bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold py-2.5 px-4 rounded-xl transition-colors">Visitar perfil</a>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </section>
 
-      {/* 5. Sección de Contacto Renovada (Más llamativa y sin formulario) */}
+      {/* 5. Sección de Contacto Renovada */}
       <section id="contacto" className="py-28 px-6 max-w-6xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-blue-600 font-bold text-sm tracking-widest uppercase bg-blue-50 px-3.5 py-1 rounded-full">Ubicación y Enlace</span>
@@ -443,7 +530,6 @@ export default function App() {
         </div>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {/* Tarjeta 1 */}
           <div className="bg-white p-8 rounded-3xl shadow-xl border border-slate-100 text-center hover:-translate-y-1 transition-all duration-300">
             <div className="w-16 h-16 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-3xl mx-auto mb-6 shadow-xs">
               📍
@@ -454,7 +540,6 @@ export default function App() {
             </p>
           </div>
 
-          {/* Tarjeta 2 */}
           <div className="bg-white p-8 rounded-3xl shadow-xl border border-slate-100 text-center hover:-translate-y-1 transition-all duration-300">
             <div className="w-16 h-16 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center text-3xl mx-auto mb-6 shadow-xs">
               ✉️
@@ -465,7 +550,6 @@ export default function App() {
             </p>
           </div>
 
-          {/* Tarjeta 3 */}
           <div className="bg-white p-8 rounded-3xl shadow-xl border border-slate-100 text-center hover:-translate-y-1 transition-all duration-300">
             <div className="w-16 h-16 rounded-2xl bg-orange-50 text-orange-600 flex items-center justify-center text-3xl mx-auto mb-6 shadow-xs">
               🌐
