@@ -5,6 +5,8 @@ import logoEje2 from './assets/logo-eje2.png';
 import logoEje3 from './assets/logo-eje3.png';
 import logoEje4 from './assets/logo-eje4.png';
 import logoCorazon from './assets/corazon.png';
+import fotoYeshua from './assets/yeshua.png';
+import fotoKevin from './assets/kevin.png';
 
 export default function App() {
   const [modalOpen, setModalOpen] = useState(false);
@@ -88,7 +90,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 3. Sección de 'Quiénes Somos' + Socios Fundadores */}
+      {/* 3. Sección de 'Quiénes Somos' + Socios Fundadores con Fotografías */}
       <section id="quienes-somos" className="py-28 px-6 max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-blue-600 font-bold text-sm tracking-widest uppercase bg-blue-50 px-3.5 py-1 rounded-full">Institucional</span>
@@ -132,7 +134,7 @@ export default function App() {
           </div>
         </div>
 
-        {/* Socios Fundadores */}
+        {/* Socios Fundadores con Fotografías Reales */}
         <div className="mt-16">
           <div className="text-center mb-12">
             <span className="text-teal-600 font-bold text-sm tracking-widest uppercase bg-teal-50 px-3.5 py-1 rounded-full">Liderazgo</span>
@@ -140,11 +142,13 @@ export default function App() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-8">
-            {/* Socio 1 */}
+            {/* Yeshua Guillermo Ortega Durán */}
             <div className="bg-white p-8 rounded-3xl shadow-lg border border-slate-100 flex flex-col sm:flex-row items-center gap-6 hover:shadow-xl transition-shadow">
-              <div className="w-28 h-28 rounded-2xl bg-gradient-to-br from-blue-500 to-teal-400 text-white flex items-center justify-center text-3xl font-black shadow-md flex-shrink-0">
-                YO
-              </div>
+              <img 
+                src={fotoYeshua} 
+                alt="Yeshua Guillermo Ortega Durán" 
+                className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl object-cover shadow-md flex-shrink-0 border-2 border-blue-500/20" 
+              />
               <div className="text-center sm:text-left">
                 <h4 className="text-xl font-bold text-slate-900">Yeshua Guillermo Ortega Durán</h4>
                 <p className="text-sm font-semibold text-blue-600 mb-2">Presidente del Consejo Directivo</p>
@@ -162,11 +166,13 @@ export default function App() {
               </div>
             </div>
 
-            {/* Socio 2 */}
+            {/* Kevin Alexander Flores Parra */}
             <div className="bg-white p-8 rounded-3xl shadow-lg border border-slate-100 flex flex-col sm:flex-row items-center gap-6 hover:shadow-xl transition-shadow">
-              <div className="w-28 h-28 rounded-2xl bg-gradient-to-br from-teal-500 to-blue-600 text-white flex items-center justify-center text-3xl font-black shadow-md flex-shrink-0">
-                KP
-              </div>
+              <img 
+                src={fotoKevin} 
+                alt="Kevin Alexander Flores Parra" 
+                className="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl object-cover shadow-md flex-shrink-0 border-2 border-teal-500/20" 
+              />
               <div className="text-center sm:text-left">
                 <h4 className="text-xl font-bold text-slate-900">Kevin Alexander Flores Parra</h4>
                 <p className="text-sm font-semibold text-teal-600 mb-2">Secretario y Tesorero</p>
@@ -368,7 +374,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 5. Sección de Contacto (Sin formulario, solo información institucional) */}
+      {/* 5. Sección de Contacto (Sin formulario) */}
       <section id="contacto" className="py-28 px-6 max-w-4xl mx-auto text-center">
         <span className="text-blue-600 font-bold text-sm tracking-widest uppercase bg-blue-50 px-3.5 py-1 rounded-full">Ubicación y Enlace</span>
         <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mt-3 mb-6 tracking-tight">Ponte en contacto</h2>
