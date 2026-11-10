@@ -27,28 +27,30 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased selection:bg-blue-600 selection:text-white scroll-smooth">
-      {/* 1. Barra de navegación fija con efecto Glassmorphism */}
+      {/* 1. Barra de navegación fija con logotipo enlazado al inicio */}
       <header className="bg-white/90 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-50 shadow-xs transition-all duration-300">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="flex items-center space-x-3">
+          <a href="#inicio" className="flex items-center space-x-3 cursor-pointer">
             <img 
               src={logoPrincipal} 
               alt="Impactemos México A.C." 
               className="h-11 md:h-12 w-auto object-contain transition-transform duration-300 hover:scale-105"
             />
-          </div>
+          </a>
           <nav className="hidden md:flex space-x-8 font-medium text-sm text-slate-600">
             <a href="#inicio" className="hover:text-blue-600 transition-colors duration-200">Inicio</a>
             <a href="#quienes-somos" className="hover:text-blue-600 transition-colors duration-200">Quiénes Somos</a>
             <a href="#ejes" className="hover:text-blue-600 transition-colors duration-200">Cuatro Ejes</a>
             <a href="#contacto" className="hover:text-blue-600 transition-colors duration-200">Contacto</a>
           </nav>
-          <button 
-            onClick={() => handleOpenModal('Únete como Voluntario o Aliado')}
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-full text-sm font-semibold shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300 active:scale-95"
+          <a 
+            href="https://linktr.ee/impactemosmx" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-full text-sm font-semibold shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300 active:scale-95 text-center"
           >
             Únete / Dona
-          </button>
+          </a>
         </div>
       </header>
 
@@ -64,7 +66,7 @@ export default function App() {
             <span>Constituida en Tijuana, B.C. • Julio de 2026</span>
           </div>
           <h1 className="text-4xl sm:text-6xl font-black tracking-tight mb-6 leading-tight">
-            Unidos por el cambio en <span className="bg-gradient-to-r from-blue-400 via-teal-300 to-lime-300 bg-clip-text text-transparent">Baja California</span>
+            <span className="bg-gradient-to-r from-blue-400 via-teal-300 to-lime-300 bg-clip-text text-transparent">Unidos por el cambio</span>
           </h1>
           <p className="text-lg sm:text-xl text-slate-300 mb-10 max-w-2xl mx-auto leading-relaxed font-light">
             Asociación civil enfocada en el desarrollo comunitario, asistencia social, protección ambiental, bienestar animal y participación cívica.
@@ -86,7 +88,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 3. Sección de 'Quiénes Somos' */}
+      {/* 3. Sección de 'Quiénes Somos' + Socios Fundadores */}
       <section id="quienes-somos" className="py-28 px-6 max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-blue-600 font-bold text-sm tracking-widest uppercase bg-blue-50 px-3.5 py-1 rounded-full">Institucional</span>
@@ -96,7 +98,7 @@ export default function App() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-2 gap-8 items-stretch">
+        <div className="grid md:grid-cols-2 gap-8 items-stretch mb-20">
           {/* Misión */}
           <div className="bg-white p-8 sm:p-10 rounded-3xl shadow-xl shadow-slate-200/50 border border-slate-100 flex flex-col justify-between hover:shadow-2xl transition-shadow duration-300">
             <div>
@@ -129,9 +131,63 @@ export default function App() {
             </div>
           </div>
         </div>
+
+        {/* Socios Fundadores */}
+        <div className="mt-16">
+          <div className="text-center mb-12">
+            <span className="text-teal-600 font-bold text-sm tracking-widest uppercase bg-teal-50 px-3.5 py-1 rounded-full">Liderazgo</span>
+            <h3 className="text-2xl sm:text-3xl font-black text-slate-900 mt-3">Consejo Directivo y Socios Fundadores</h3>
+          </div>
+
+          <div className="grid md:grid-cols-2 gap-8">
+            {/* Socio 1 */}
+            <div className="bg-white p-8 rounded-3xl shadow-lg border border-slate-100 flex flex-col sm:flex-row items-center gap-6 hover:shadow-xl transition-shadow">
+              <div className="w-28 h-28 rounded-2xl bg-gradient-to-br from-blue-500 to-teal-400 text-white flex items-center justify-center text-3xl font-black shadow-md flex-shrink-0">
+                YO
+              </div>
+              <div className="text-center sm:text-left">
+                <h4 className="text-xl font-bold text-slate-900">Yeshua Guillermo Ortega Durán</h4>
+                <p className="text-sm font-semibold text-blue-600 mb-2">Presidente del Consejo Directivo</p>
+                <p className="text-slate-600 text-xs leading-relaxed mb-4">
+                  Liderazgo social enfocado en la estrategia digital, vinculación comunitaria y gestión de proyectos para el desarrollo de Baja California.
+                </p>
+                <a 
+                  href="https://linktr.ee/ortegayeshua" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-block bg-slate-900 hover:bg-blue-600 text-white text-xs font-semibold px-4 py-2 rounded-xl transition-colors"
+                >
+                  Ver Perfil / Redes
+                </a>
+              </div>
+            </div>
+
+            {/* Socio 2 */}
+            <div className="bg-white p-8 rounded-3xl shadow-lg border border-slate-100 flex flex-col sm:flex-row items-center gap-6 hover:shadow-xl transition-shadow">
+              <div className="w-28 h-28 rounded-2xl bg-gradient-to-br from-teal-500 to-blue-600 text-white flex items-center justify-center text-3xl font-black shadow-md flex-shrink-0">
+                KP
+              </div>
+              <div className="text-center sm:text-left">
+                <h4 className="text-xl font-bold text-slate-900">Kevin Alexander Flores Parra</h4>
+                <p className="text-sm font-semibold text-teal-600 mb-2">Secretario y Tesorero</p>
+                <p className="text-slate-600 text-xs leading-relaxed mb-4">
+                  Co-fundador comprometido con la asistencia social, la estructuración administrativa y operativa de iniciativas comunitarias.
+                </p>
+                <a 
+                  href="https://www.instagram.com/kevinparra.mx/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="inline-block bg-slate-900 hover:bg-teal-600 text-white text-xs font-semibold px-4 py-2 rounded-xl transition-colors"
+                >
+                  Instagram Oficial
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
 
-      {/* 4. Sección de 'Nuestros Cuatro Ejes Operativos' con Logotipos Oficiales */}
+      {/* 4. Sección de 'Nuestros Cuatro Ejes Operativos' con Redes Sociales Dinámicas */}
       <section id="ejes" className="py-28 bg-slate-100/70 px-6 border-y border-slate-200/60">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -192,6 +248,14 @@ export default function App() {
                   <p className="text-slate-600 text-sm mb-6 leading-relaxed">
                     Centros de acopio, entrega de apoyos alimentarios, brigadas asistenciales y comunitarias para grupos vulnerables.
                   </p>
+
+                  {/* Redes Sociales del Eje */}
+                  <div className="mb-6 p-3 bg-teal-50/60 rounded-2xl space-y-2 text-xs">
+                    <p className="font-bold text-teal-900 mb-1">Redes Oficiales:</p>
+                    <a href="https://www.instagram.com/juntossomosmasmexico" target="_blank" rel="noopener noreferrer" className="block text-teal-700 hover:underline truncate">📸 Instagram</a>
+                    <a href="https://www.tiktok.com/@juntossomosmasmexico" target="_blank" rel="noopener noreferrer" className="block text-teal-700 hover:underline truncate">🎵 TikTok</a>
+                    <a href="https://www.facebook.com/JuntosSomosMasMexico" target="_blank" rel="noopener noreferrer" className="block text-teal-700 hover:underline truncate">📘 Facebook</a>
+                  </div>
                 </div>
                 <button 
                   onClick={() => handleOpenModal('Juntos Somos Más (Asistencia Social)')}
@@ -217,6 +281,14 @@ export default function App() {
                   <p className="text-slate-600 text-sm mb-6 leading-relaxed">
                     Jornadas de reforestación urbana, talleres de educación ambiental, huertos urbanos y recuperación de espacios públicos.
                   </p>
+
+                  {/* Redes Sociales del Eje */}
+                  <div className="mb-6 p-3 bg-lime-50/60 rounded-2xl space-y-2 text-xs">
+                    <p className="font-bold text-lime-900 mb-1">Redes Oficiales:</p>
+                    <a href="https://www.instagram.com/ecoimpacto.mx" target="_blank" rel="noopener noreferrer" className="block text-lime-700 hover:underline truncate">📸 Instagram</a>
+                    <a href="https://www.tiktok.com/@ecoimpactomx" target="_blank" rel="noopener noreferrer" className="block text-lime-700 hover:underline truncate">🎵 TikTok</a>
+                    <a href="https://www.facebook.com/ecoimpacto.mx" target="_blank" rel="noopener noreferrer" className="block text-lime-700 hover:underline truncate">📘 Facebook</a>
+                  </div>
                 </div>
                 <button 
                   onClick={() => handleOpenModal('EcoImpacto México (Medio Ambiente)')}
@@ -242,6 +314,14 @@ export default function App() {
                   <p className="text-slate-600 text-sm mb-6 leading-relaxed">
                     Campañas de concientización sobre tenencia responsable, fomento a la adopción, rescate animal y salud preventiva.
                   </p>
+
+                  {/* Redes Sociales del Eje */}
+                  <div className="mb-6 p-3 bg-orange-50/60 rounded-2xl space-y-2 text-xs">
+                    <p className="font-bold text-orange-900 mb-1">Redes Oficiales:</p>
+                    <a href="https://www.instagram.com/zoolidariomx" target="_blank" rel="noopener noreferrer" className="block text-orange-700 hover:underline truncate">📸 Instagram</a>
+                    <a href="https://www.tiktok.com/@zoolidariomx" target="_blank" rel="noopener noreferrer" className="block text-orange-700 hover:underline truncate">🎵 TikTok</a>
+                    <a href="https://www.facebook.com/zoolidariomx" target="_blank" rel="noopener noreferrer" className="block text-orange-700 hover:underline truncate">📘 Facebook</a>
+                  </div>
                 </div>
                 <button 
                   onClick={() => handleOpenModal('Zoolidario México (Bienestar Animal)')}
@@ -267,6 +347,14 @@ export default function App() {
                   <p className="text-slate-600 text-sm mb-6 leading-relaxed">
                     Talleres de formación cívica, capacitación tecnológica y digital, foros ciudadanos y proyectos comunitarios juveniles.
                   </p>
+
+                  {/* Redes Sociales del Eje */}
+                  <div className="mb-6 p-3 bg-blue-50/60 rounded-2xl space-y-2 text-xs">
+                    <p className="font-bold text-blue-900 mb-1">Redes Oficiales:</p>
+                    <a href="https://www.instagram.com/redlideresmexico" target="_blank" rel="noopener noreferrer" className="block text-blue-700 hover:underline truncate">📸 Instagram</a>
+                    <a href="https://www.tiktok.com/@redlideresmexico" target="_blank" rel="noopener noreferrer" className="block text-blue-700 hover:underline truncate">🎵 TikTok</a>
+                    <a href="https://www.facebook.com/redlideresmexico" target="_blank" rel="noopener noreferrer" className="block text-blue-700 hover:underline truncate">📘 Facebook</a>
+                  </div>
                 </div>
                 <button 
                   onClick={() => handleOpenModal('Red de Líderes México (Participación Cívica)')}
@@ -280,74 +368,43 @@ export default function App() {
         </div>
       </section>
 
-      {/* 5. Sección de Contacto (Dirección sin calle ni número) */}
-      <section id="contacto" className="py-28 px-6 max-w-7xl mx-auto">
-        <div className="grid md:grid-cols-2 gap-16 items-center">
-          <div>
-            <span className="text-blue-600 font-bold text-sm tracking-widest uppercase bg-blue-50 px-3.5 py-1 rounded-full">Ubicación y Enlace</span>
-            <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mt-3 mb-6 tracking-tight">Ponte en contacto</h2>
-            <p className="text-slate-600 text-lg mb-8 leading-relaxed">
-              ¿Deseas sumarte como voluntario, proponer una alianza o conocer más sobre nuestros programas en Tijuana? Escríbenos directamente.
-            </p>
+      {/* 5. Sección de Contacto (Sin formulario, solo información institucional) */}
+      <section id="contacto" className="py-28 px-6 max-w-4xl mx-auto text-center">
+        <span className="text-blue-600 font-bold text-sm tracking-widest uppercase bg-blue-50 px-3.5 py-1 rounded-full">Ubicación y Enlace</span>
+        <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mt-3 mb-6 tracking-tight">Ponte en contacto</h2>
+        <p className="text-slate-600 text-lg mb-12 max-w-2xl mx-auto leading-relaxed">
+          ¿Deseas sumarte como voluntario, proponer una alianza o conocer más sobre nuestros programas en Tijuana? Escríbenos directamente o conéctate en nuestras plataformas.
+        </p>
 
-            <div className="space-y-6">
-              <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl flex-shrink-0 shadow-xs">
-                  📍
-                </div>
-                <div>
-                  <h4 className="font-bold text-slate-900">Ubicación Institucional</h4>
-                  <p className="text-slate-600 text-sm mt-1 leading-relaxed">
-                    Col. El Mirador, C.P. 22204, Tijuana, Baja California, México.
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center text-xl flex-shrink-0 shadow-xs">
-                  ✉️
-                </div>
-                <div>
-                  <h4 className="font-bold text-slate-900">Correo Electrónico Oficial</h4>
-                  <p className="text-slate-600 text-sm mt-1">
-                    <a href="mailto:impactemosmx@gmail.com" className="text-blue-600 underline font-medium hover:text-blue-700">impactemosmx@gmail.com</a>
-                  </p>
-                </div>
-              </div>
-
-              <div className="flex items-start space-x-4">
-                <div className="w-12 h-12 rounded-2xl bg-orange-50 text-orange-600 flex items-center justify-center text-xl flex-shrink-0 shadow-xs">
-                  🌐
-                </div>
-                <div>
-                  <h4 className="font-bold text-slate-900">Redes Sociales</h4>
-                  <p className="text-slate-600 text-sm mt-1">
-                    Instagram | Facebook | TikTok: <strong>@impactemosmx</strong>
-                  </p>
-                </div>
-              </div>
+        <div className="grid sm:grid-cols-3 gap-6 text-left">
+          <div className="bg-white p-6 rounded-3xl shadow-md border border-slate-100">
+            <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center text-xl mb-4 shadow-xs">
+              📍
             </div>
+            <h4 className="font-bold text-slate-900 mb-1">Ubicación</h4>
+            <p className="text-slate-600 text-xs leading-relaxed">
+              Col. El Mirador, C.P. 22204, Tijuana, Baja California, México.
+            </p>
           </div>
 
-          <div className="bg-white p-8 sm:p-10 rounded-3xl shadow-xl border border-slate-100">
-            <h3 className="text-2xl font-bold text-slate-900 mb-6">Envíanos un mensaje</h3>
-            <form onSubmit={(e) => { e.preventDefault(); handleOpenModal('¡Mensaje enviado con éxito!'); }} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Nombre completo</label>
-                <input required type="text" placeholder="Tu nombre" className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm bg-slate-50/50" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Correo electrónico</label>
-                <input required type="email" placeholder="tu@correo.com" className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm bg-slate-50/50" />
-              </div>
-              <div>
-                <label className="block text-sm font-medium text-slate-700 mb-1">Mensaje o interés</label>
-                <textarea required rows={4} placeholder="¿Cómo te gustaría participar?" className="w-full px-4 py-3 rounded-xl border border-slate-200 focus:outline-none focus:ring-2 focus:ring-blue-600 text-sm bg-slate-50/50"></textarea>
-              </div>
-              <button type="submit" className="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3.5 rounded-xl shadow-lg shadow-blue-500/20 transition duration-200">
-                Enviar Mensaje
-              </button>
-            </form>
+          <div className="bg-white p-6 rounded-3xl shadow-md border border-slate-100">
+            <div className="w-12 h-12 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center text-xl mb-4 shadow-xs">
+              ✉️
+            </div>
+            <h4 className="font-bold text-slate-900 mb-1">Correo Oficial</h4>
+            <p className="text-slate-600 text-xs mt-1">
+              <a href="mailto:impactemosmx@gmail.com" className="text-blue-600 underline font-medium hover:text-blue-700">impactemosmx@gmail.com</a>
+            </p>
+          </div>
+
+          <div className="bg-white p-6 rounded-3xl shadow-md border border-slate-100">
+            <div className="w-12 h-12 rounded-2xl bg-orange-50 text-orange-600 flex items-center justify-center text-xl mb-4 shadow-xs">
+              🌐
+            </div>
+            <h4 className="font-bold text-slate-900 mb-1">Redes Generales</h4>
+            <p className="text-slate-600 text-xs mt-1">
+              <strong>@impactemosmx</strong>
+            </p>
           </div>
         </div>
       </section>
