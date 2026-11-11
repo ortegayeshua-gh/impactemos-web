@@ -29,7 +29,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased selection:bg-blue-600 selection:text-white scroll-smooth">
-      {/* 1. Barra de navegación fija con logotipo enlazado al inicio */}
+      {/* 1. Barra de navegación fija con logotipo enlazado al inicio y botones separados */}
       <header className="bg-white/90 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-50 shadow-xs transition-all duration-300">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <a href="#inicio" className="flex items-center space-x-3 cursor-pointer">
@@ -46,29 +46,35 @@ export default function App() {
             <a href="#ejes" className="hover:text-blue-600 transition-colors duration-200">Cuatro Ejes</a>
             <a href="#contacto" className="hover:text-blue-600 transition-colors duration-200">Contacto</a>
           </nav>
-          <a 
-            href="https://linktr.ee/impactemosmx" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2.5 rounded-full text-sm font-semibold shadow-md shadow-blue-500/20 hover:shadow-lg hover:shadow-blue-500/30 transition-all duration-300 active:scale-95 text-center"
-          >
-            Únete / Dona
-          </a>
+          <div className="flex items-center space-x-3">
+            <a 
+              href="https://forms.gle/4dv2DtafZyp1G6KVA" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full text-xs sm:text-sm font-semibold shadow-md shadow-blue-500/20 hover:shadow-lg transition-all duration-300 active:scale-95 text-center"
+            >
+              Únete
+            </a>
+            <a 
+              href="https://paypal.me/impactemosmx" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="bg-teal-600 hover:bg-teal-700 text-white px-5 py-2 rounded-full text-xs sm:text-sm font-semibold shadow-md shadow-teal-500/20 hover:shadow-lg transition-all duration-300 active:scale-95 text-center"
+            >
+              Dona
+            </a>
+          </div>
         </div>
       </header>
 
-      {/* 2. Sección Hero */}
+      {/* 2. Sección Hero (Sin la frase solicitada) */}
       <section id="inicio" className="relative overflow-hidden bg-slate-900 text-white py-28 sm:py-36 px-6 text-center">
         <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:16px_16px]"></div>
         <div className="absolute -top-40 -right-40 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl"></div>
         <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-teal-500/15 rounded-full blur-3xl"></div>
 
         <div className="relative max-w-4xl mx-auto">
-          <div className="inline-flex items-center space-x-2 bg-blue-500/10 border border-blue-400/30 text-blue-300 text-xs sm:text-sm font-semibold px-4 py-1.5 rounded-full uppercase tracking-wider mb-8 backdrop-blur-md">
-            <span className="w-2 h-2 rounded-full bg-blue-400 animate-pulse"></span>
-            <span>Constituida en Tijuana, B.C. • Julio de 2026</span>
-          </div>
-          <h1 className="text-4xl sm:text-6xl font-black tracking-tight mb-6 leading-tight">
+          <h1 className="text-4xl sm:text-6xl font-black tracking-tight mb-6 leading-tight pt-4">
             <span className="bg-gradient-to-r from-blue-400 via-teal-300 to-lime-300 bg-clip-text text-transparent">Unidos por el cambio</span>
           </h1>
           <p className="text-lg sm:text-xl text-slate-300 mb-10 max-w-2xl mx-auto leading-relaxed font-light">
@@ -91,7 +97,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 3. Sección de 'Quiénes Somos' + Socios Fundadores con Fotos Grandes y Sobrepuestas */}
+      {/* 3. Sección de 'Quiénes Somos' + Socios Fundadores */}
       <section id="quienes-somos" className="py-28 px-6 max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-blue-600 font-bold text-sm tracking-widest uppercase bg-blue-50 px-3.5 py-1 rounded-full">Institucional</span>
@@ -133,7 +139,7 @@ export default function App() {
           </div>
         </div>
 
-        {/* Socios Fundadores con Fotos Grandes y Sobrepuestas */}
+        {/* Socios Fundadores */}
         <div className="mt-20">
           <div className="text-center mb-20">
             <span className="text-teal-600 font-bold text-sm tracking-widest uppercase bg-teal-50 px-3.5 py-1 rounded-full">Liderazgo</span>
@@ -142,7 +148,6 @@ export default function App() {
           </div>
 
           <div className="grid md:grid-cols-2 gap-12 pt-10">
-            {/* Yeshua */}
             <div className="bg-white rounded-3xl shadow-xl border border-slate-100 p-8 pt-20 relative text-center flex flex-col justify-between hover:shadow-2xl transition-all duration-300">
               <div className="absolute -top-14 left-1/2 transform -translate-x-1/2 w-32 h-32 sm:w-36 sm:h-36 rounded-full p-1 bg-white shadow-2xl">
                 <img 
@@ -171,7 +176,6 @@ export default function App() {
               </div>
             </div>
 
-            {/* Kevin */}
             <div className="bg-white rounded-3xl shadow-xl border border-slate-100 p-8 pt-20 relative text-center flex flex-col justify-between hover:shadow-2xl transition-all duration-300">
               <div className="absolute -top-14 left-1/2 transform -translate-x-1/2 w-32 h-32 sm:w-36 sm:h-36 rounded-full p-1 bg-white shadow-2xl">
                 <img 
@@ -497,7 +501,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 5. Sección de Contacto Renovada (Con enlace funcional en Redes Generales) */}
+      {/* 5. Sección de Contacto */}
       <section id="contacto" className="py-28 px-6 max-w-6xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-blue-600 font-bold text-sm tracking-widest uppercase bg-blue-50 px-3.5 py-1 rounded-full">Ubicación y Enlace</span>
