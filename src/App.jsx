@@ -684,20 +684,54 @@ export default function App() {
             </p>
           </div>
 
-          <a 
-            href="https://linktr.ee/impactemosmx" 
-            target="_blank" 
-            rel="noopener noreferrer"
-            className="bg-white p-8 rounded-3xl shadow-xl border border-slate-100 text-center hover:-translate-y-1 transition-all duration-300 block group cursor-pointer"
-          >
-            <div className="w-16 h-16 rounded-2xl bg-orange-50 text-orange-600 flex items-center justify-center text-3xl mx-auto mb-6 shadow-xs group-hover:scale-110 transition-transform">
-              🌐
+          {/* Tarjeta de Redes Sociales con Iconos / Botones Oficiales */}
+          <div className="bg-white p-8 rounded-3xl shadow-xl border border-slate-100 text-center hover:-translate-y-1 transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <div className="w-16 h-16 rounded-2xl bg-pink-50 text-pink-600 flex items-center justify-center text-3xl mx-auto mb-4 shadow-xs">
+                🌐
+              </div>
+              <h4 className="text-xl font-bold text-slate-900 mb-3">Redes Oficiales</h4>
+              <p className="text-slate-500 text-xs mb-4">Síguenos en nuestras plataformas:</p>
             </div>
-            <h4 className="text-xl font-bold text-slate-900 mb-2 group-hover:text-blue-600 transition-colors">Redes Generales</h4>
-            <p className="text-slate-600 text-sm mt-1">
-              <span className="font-bold text-slate-800 underline">@impactemosmx</span>
-            </p>
-          </a>
+            <div className="flex justify-center items-center gap-3">
+              <a 
+                href="https://www.instagram.com/impactemosmx" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                aria-label="Instagram"
+                className="w-11 h-11 rounded-xl bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 text-white flex items-center justify-center shadow-md hover:scale-110 transition-transform duration-200 text-lg font-bold"
+              >
+                IG
+              </a>
+              <a 
+                href="https://www.facebook.com/impactemosmx" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                aria-label="Facebook"
+                className="w-11 h-11 rounded-xl bg-blue-600 text-white flex items-center justify-center shadow-md hover:scale-110 transition-transform duration-200 text-lg font-bold"
+              >
+                FB
+              </a>
+              <a 
+                href="https://www.tiktok.com/@impactemosmx" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                aria-label="TikTok"
+                className="w-11 h-11 rounded-xl bg-slate-900 text-white flex items-center justify-center shadow-md hover:scale-110 transition-transform duration-200 text-sm font-black"
+              >
+                TT
+              </a>
+              <a 
+                href="https://www.youtube.com/@impactemosmx" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                aria-label="YouTube"
+                className="w-11 h-11 rounded-xl bg-red-600 text-white flex items-center justify-center shadow-md hover:scale-110 transition-transform duration-200 text-sm font-black"
+              >
+                YT
+              </a>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -714,7 +748,7 @@ export default function App() {
         </div>
       </footer>
 
-      {/* MODAL LIGHTBOX DE GALERÍA (AJUSTADO A GRANDE Y CON TECLADO) */}
+      {/* MODAL LIGHTBOX DE GALERÍA */}
       {lightboxIndex !== null && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 animate-fade-in">
           {/* Botón Cerrar (X) */}
