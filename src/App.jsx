@@ -15,7 +15,7 @@ import imgRelleno3 from './assets/RellenoSanitario2026-3.avif';
 import imgRelleno4 from './assets/RellenoSanitario2026-4.avif';
 import imgRelleno5 from './assets/RellenoSanitario2026-5.avif';
 
-// Historias emotivas asociadas a cada fotografía de la galería
+// Historias emotivas asociadas a cada fotografía (la última enfocada en los perritos)
 const galeriaHistorias = [
   {
     img: imgRelleno1,
@@ -39,8 +39,8 @@ const galeriaHistorias = [
   },
   {
     img: imgRelleno5,
-    titulo: "Construyendo un futuro con dignidad",
-    historia: "La calidez de una cobija, un plato de comida caliente o una despensa básica significan alivio y paz para un hogar. Juntos podemos transformar su realidad y devolverles la esperanza."
+    titulo: "Guardianes fieles en la adversidad",
+    historia: "En medio del entorno difícil del relleno sanitario, los perritos de la zona sobreviven compartiendo la misma vulnerabilidad. A través de Zoolidario México, les llevamos alimento, cuidado y esperanza, reconociendo su lealtad incondicional y dándoles una voz de protección."
   }
 ];
 
@@ -151,13 +151,13 @@ export default function App() {
           
           <div className="relative z-10 max-w-4xl mx-auto text-center">
             <span className="inline-block bg-teal-500/20 border border-teal-400/30 text-teal-300 text-xs sm:text-sm font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-6">
-              Próxima Jornada: Sábado 12 de Diciembre de 2026[cite: 35]
+              Próxima Jornada: Sábado 12 de Diciembre de 2026
             </span>
             <h2 className="text-3xl sm:text-5xl font-black tracking-tight mb-6 leading-tight">
               Llevemos Esperanza al Relleno Sanitario de Tijuana
             </h2>
             <p className="text-slate-300 text-base sm:text-lg mb-8 leading-relaxed font-light max-w-3xl mx-auto">
-              Hay familias, niñas, niños y perritos viviendo en situación vulnerable en el basurero municipal de Tijuana que necesitan de nuestro apoyo[cite: 35]. Súmate con tu donativo en especie, aportación económica o participando como voluntario[cite: 35, 36].
+              Hay familias, niñas, niños y perritos viviendo en situación vulnerable en el basurero municipal de Tijuana que necesitan de nuestro apoyo. Súmate con tu donativo en especie, aportación económica o participando como voluntario.
             </p>
 
             {/* Galería de Imágenes Grandes (Clickeables) */}
@@ -179,14 +179,26 @@ export default function App() {
               </div>
             </div>
 
-            {/* Listado de lo que se está recaudando */}
+            {/* Listado ordenado y limpio de lo que se está recaudando */}
             <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 text-left max-w-2xl mx-auto mb-10 border border-white/10">
-              <h3 className="text-xl font-bold text-teal-300 mb-4 text-center">📦 ¿Qué puedes donar para esta colecta?</h3>
-              <ul className="grid sm:grid-cols-2 gap-3 text-sm text-slate-200">
-                <li className="flex items-center space-x-2"><span>🥫</span><span>Alimentos no perecederos y agua[cite: 35]</span></li>
-                <li className="flex items-center space-x-2"><span>🧥</span><span>Ropa en buen estado, cobijas y calzado[cite: 35]</span></li>
-                <li className="flex items-center space-x-2"><span>🧸</span><span>Juguetes para la niñez[cite: 35]</span></li>
-                <li className="flex items-center space-x-2"><span>🐶</span><span>Alimento para perritos y artículos de higiene[cite: 35]</span></li>
+              <h3 className="text-xl font-bold text-teal-300 mb-6 text-center">📦 ¿Qué puedes donar para esta colecta?</h3>
+              <ul className="grid sm:grid-cols-2 gap-4 text-sm text-slate-200">
+                <li className="flex items-start space-x-3">
+                  <span className="text-xl">🥫</span>
+                  <span><strong>Alimentos:</strong> No perecederos y agua embotellada.</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <span className="text-xl">🧥</span>
+                  <span><strong>Ropa y abrigo:</strong> Ropa en buen estado, cobijas y calzado.</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <span className="text-xl">🧸</span>
+                  <span><strong>Juguetes:</strong> Nuevos o en buen estado para la niñez.</span>
+                </li>
+                <li className="flex items-start space-x-3">
+                  <span className="text-xl">🐶</span>
+                  <span><strong>Bienestar animal:</strong> Alimento para perritos y artículos de higiene.</span>
+                </li>
               </ul>
             </div>
 
