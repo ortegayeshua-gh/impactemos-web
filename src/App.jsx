@@ -8,7 +8,7 @@ import logoCorazon from './assets/corazon.png';
 import fotoYeshua from './assets/yeshua.png';
 import fotoKevin from './assets/kevin.png';
 
-// Importación de las 5 imágenes de la nueva actividad
+// Importación de las 5 imágenes para la sección
 import imgRelleno1 from './assets/RellenoSanitario2026-1.avif';
 import imgRelleno2 from './assets/RellenoSanitario2026-2.avif';
 import imgRelleno3 from './assets/RellenoSanitario2026-3.avif';
@@ -105,23 +105,53 @@ export default function App() {
         </div>
       </section>
 
-      {/* 3. NUEVA SECCIÓN: Próxima Actividad (Llevemos Esperanza al Relleno Sanitario de Tijuana) */}
+      {/* 3. NUEVA SECCIÓN: Próxima Actividad con Imágenes y Listado Integrados */}
       <section id="proxima-actividad" className="py-28 px-6 max-w-7xl mx-auto">
-        <div className="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white rounded-3xl p-8 sm:p-14 shadow-2xl relative overflow-hidden mb-16">
+        <div className="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white rounded-3xl p-8 sm:p-14 shadow-2xl relative overflow-hidden mb-12">
           <div className="absolute top-0 right-0 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl"></div>
           
-          <div className="relative z-10 max-w-3xl mx-auto text-center">
+          <div className="relative z-10 max-w-4xl mx-auto text-center">
             <span className="inline-block bg-teal-500/20 border border-teal-400/30 text-teal-300 text-xs sm:text-sm font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-6">
-              Próxima Actividad Comunitaria
+              Próxima Jornada: Sábado 12 de Diciembre de 2026[cite: 35]
             </span>
             <h2 className="text-3xl sm:text-5xl font-black tracking-tight mb-6 leading-tight">
               Llevemos Esperanza al Relleno Sanitario de Tijuana
             </h2>
-            <p className="text-slate-300 text-base sm:text-lg mb-8 leading-relaxed font-light">
-              Súmate a esta noble causa con tu donativo en artículos o aportación económica. Tu ayuda llega directamente a quienes más lo necesitan, construyendo momentos de alegría y apoyo comunitario. ¡Sé parte del cambio!
+            <p className="text-slate-300 text-base sm:text-lg mb-8 leading-relaxed font-light max-w-3xl mx-auto">
+              Hay familias, niñas, niños y perritos viviendo en situación vulnerable en el basurero municipal de Tijuana que necesitan de nuestro apoyo[cite: 35]. Súmate con tu donativo en especie, aportación económica o participando como voluntario[cite: 35, 36].
             </p>
 
-            {/* Botones de acción requeridos */}
+            {/* Galería de imágenes dentro del mismo cuadro */}
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 my-10">
+              <div className="overflow-hidden rounded-2xl shadow-md h-36 bg-slate-800 border border-white/10">
+                <img src={imgRelleno1} alt="Relleno Sanitario 1" className="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy" />
+              </div>
+              <div className="overflow-hidden rounded-2xl shadow-md h-36 bg-slate-800 border border-white/10">
+                <img src={imgRelleno2} alt="Relleno Sanitario 2" className="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy" />
+              </div>
+              <div className="overflow-hidden rounded-2xl shadow-md h-36 bg-slate-800 border border-white/10">
+                <img src={imgRelleno3} alt="Relleno Sanitario 3" className="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy" />
+              </div>
+              <div className="overflow-hidden rounded-2xl shadow-md h-36 bg-slate-800 border border-white/10">
+                <img src={imgRelleno4} alt="Relleno Sanitario 4" className="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy" />
+              </div>
+              <div className="overflow-hidden rounded-2xl shadow-md h-36 bg-slate-800 border border-white/10 col-span-2 sm:col-span-1">
+                <img src={imgRelleno5} alt="Relleno Sanitario 5" className="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy" />
+              </div>
+            </div>
+
+            {/* Listado de lo que se está recaudando */}
+            <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 text-left max-w-2xl mx-auto mb-10 border border-white/10">
+              <h3 className="text-xl font-bold text-teal-300 mb-4 text-center">📦 ¿Qué puedes donar para esta colecta?</h3>
+              <ul className="grid sm:grid-cols-2 gap-3 text-sm text-slate-200">
+                <li className="flex items-center space-x-2"><span>🥫</span><span>Alimentos no perecederos y agua[cite: 35]</span></li>
+                <li className="flex items-center space-x-2"><span>🧥</span><span>Ropa en buen estado, cobijas y calzado[cite: 35]</span></li>
+                <li className="flex items-center space-x-2"><span>🧸</span><span>Juguetes para la niñez[cite: 35]</span></li>
+                <li className="flex items-center space-x-2"><span>🐶</span><span>Alimento para perritos y artículos de higiene[cite: 35]</span></li>
+              </ul>
+            </div>
+
+            {/* Botones de Acción */}
             <div className="flex flex-wrap justify-center gap-4">
               <a 
                 href="https://forms.gle/4dv2DtafZyp1G6KVA" 
@@ -145,33 +175,9 @@ export default function App() {
                 rel="noopener noreferrer"
                 className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-3.5 rounded-2xl shadow-lg transition-all duration-300 text-sm flex items-center space-x-2"
               >
-                <span>💬 WhatsApp con Kevin</span>
+                <span>💬 Mensaje a Kevin (Donación en Especie)</span>
               </a>
             </div>
-          </div>
-        </div>
-
-        {/* Galería Fotográfica de Años Anteriores */}
-        <div className="text-center mb-10">
-          <h3 className="text-2xl font-black text-slate-900 mb-2">Momentos que Inspiran (Ediciones Anteriores)</h3>
-          <p className="text-slate-600 text-sm">Así hemos llevado sonrisas y apoyo en años pasados.</p>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div className="relative group overflow-hidden rounded-3xl shadow-xl h-64 bg-slate-200">
-            <img src={imgRelleno1} alt="Actividad anterior 1" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
-          </div>
-          <div className="relative group overflow-hidden rounded-3xl shadow-xl h-64 bg-slate-200">
-            <img src={imgRelleno2} alt="Actividad anterior 2" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
-          </div>
-          <div className="relative group overflow-hidden rounded-3xl shadow-xl h-64 bg-slate-200">
-            <img src={imgRelleno3} alt="Actividad anterior 3" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
-          </div>
-          <div className="relative group overflow-hidden rounded-3xl shadow-xl h-64 bg-slate-200 sm:col-span-1 lg:col-span-1.5">
-            <img src={imgRelleno4} alt="Actividad anterior 4" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
-          </div>
-          <div className="relative group overflow-hidden rounded-3xl shadow-xl h-64 bg-slate-200 sm:col-span-1 lg:col-span-1.5">
-            <img src={imgRelleno5} alt="Actividad anterior 5" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
           </div>
         </div>
       </section>
