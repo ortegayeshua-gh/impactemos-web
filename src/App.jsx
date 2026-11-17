@@ -8,19 +8,50 @@ import logoCorazon from './assets/corazon.png';
 import fotoYeshua from './assets/yeshua.png';
 import fotoKevin from './assets/kevin.png';
 
-// Importación de las 5 imágenes para la sección
+// Importación de las 5 imágenes
 import imgRelleno1 from './assets/RellenoSanitario2026-1.avif';
 import imgRelleno2 from './assets/RellenoSanitario2026-2.avif';
 import imgRelleno3 from './assets/RellenoSanitario2026-3.avif';
 import imgRelleno4 from './assets/RellenoSanitario2026-4.avif';
 import imgRelleno5 from './assets/RellenoSanitario2026-5.avif';
 
+// Historias emotivas asociadas a cada fotografía de la galería
+const galeriaHistorias = [
+  {
+    img: imgRelleno1,
+    titulo: "El brillo de una sonrisa",
+    historia: "A pesar de las dificultades cotidianas en el entorno del basurero municipal, la niñez guarda una ilusión inquebrantable. Cada pequeña visita y cada detalle logran encender sonrisas genuinas que nos recuerdan la importancia de estar presentes."
+  },
+  {
+    img: imgRelleno2,
+    titulo: "Fuerza y amor maternal",
+    historia: "Madres valientes que todos los días sostienen a sus familias con el corazón por delante. Su esfuerzo diario es un testimonio de amor incondicional y de la lucha constante por un futuro mejor para sus hijos."
+  },
+  {
+    img: imgRelleno3,
+    titulo: "Comunidad unida por la esperanza",
+    historia: "Cuando nos unimos como sociedad, rompemos barreras y llevamos calor humano a donde más se necesita. Esta jornada representa un puente de solidaridad y apoyo mutuo para toda la comunidad."
+  },
+  {
+    img: imgRelleno4,
+    titulo: "Pequeños pasos, grandes sueños",
+    historia: "Niñas y niños con aspiraciones infinitas que merecen oportunidades, educación y momentos de sano esparcimiento. Apoyarlos hoy es sembrar la semilla de un mañana lleno de posibilidades."
+  },
+  {
+    img: imgRelleno5,
+    titulo: "Construyendo un futuro con dignidad",
+    historia: "La calidez de una cobija, un plato de comida caliente o una despensa básica significan alivio y paz para un hogar. Juntos podemos transformar su realidad y devolverles la esperanza."
+  }
+];
+
 export default function App() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
   const [activeTab, setActiveTab] = useState('todos');
 
-  // Actualiza dinámicamente el favicon con la imagen de corazon.png
+  // Estado para la galería interactiva en pantalla completa (Lightbox)
+  const [lightboxIndex, setLightboxIndex] = useState(null);
+
   useEffect(() => {
     const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
     link.type = 'image/png';
@@ -32,6 +63,14 @@ export default function App() {
   const handleOpenModal = (title) => {
     setModalTitle(title);
     setModalOpen(true);
+  };
+
+  const nextImage = () => {
+    setLightboxIndex((prev) => (prev + 1) % galeriaHistorias.length);
+  };
+
+  const prevImage = () => {
+    setLightboxIndex((prev) => (prev - 1 + galeriaHistorias.length) % galeriaHistorias.length);
   };
 
   return (
@@ -59,7 +98,7 @@ export default function App() {
               href="https://forms.gle/4dv2DtafZyp1G6KVA" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full text-xs sm:text-sm font-semibold shadow-md shadow-blue-500/20 hover:shadow-lg transition-all duration-300 active:scale-95 text-center"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full text-xs sm:text-sm font-semibold shadow-md shadow-blue-500/25 transition-all duration-300 active:scale-95 text-center"
             >
               Únete
             </a>
@@ -67,7 +106,7 @@ export default function App() {
               href="https://paypal.me/impactemosmx" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="bg-teal-600 hover:bg-teal-700 text-white px-5 py-2 rounded-full text-xs sm:text-sm font-semibold shadow-md shadow-teal-500/20 hover:shadow-lg transition-all duration-300 active:scale-95 text-center"
+              className="bg-teal-600 hover:bg-teal-700 text-white px-5 py-2 rounded-full text-xs sm:text-sm font-semibold shadow-md shadow-teal-500/25 transition-all duration-300 active:scale-95 text-center"
             >
               Dona
             </a>
@@ -76,13 +115,13 @@ export default function App() {
       </header>
 
       {/* 2. Sección Hero */}
-      <section id="inicio" className="relative overflow-hidden bg-slate-900 text-white py-28 sm:py-36 px-6 text-center">
+      <section id="inicio" className="relative overflow-hidden bg-slate-900 text-white py-24 sm:py-32 px-6 text-center">
         <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:16px_16px]"></div>
         <div className="absolute -top-40 -right-40 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl"></div>
         <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-teal-500/15 rounded-full blur-3xl"></div>
 
         <div className="relative max-w-4xl mx-auto">
-          <h1 className="text-4xl sm:text-6xl font-black tracking-tight mb-6 leading-tight pt-4">
+          <h1 className="text-4xl sm:text-6xl font-black tracking-tight mb-6 leading-tight pt-2">
             <span className="bg-gradient-to-r from-blue-400 via-teal-300 to-lime-300 bg-clip-text text-transparent">Unidos por el cambio</span>
           </h1>
           <p className="text-lg sm:text-xl text-slate-300 mb-10 max-w-2xl mx-auto leading-relaxed font-light">
@@ -105,9 +144,9 @@ export default function App() {
         </div>
       </section>
 
-      {/* 3. NUEVA SECCIÓN: Próxima Actividad con Imágenes y Listado Integrados */}
-      <section id="proxima-actividad" className="py-28 px-6 max-w-7xl mx-auto">
-        <div className="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white rounded-3xl p-8 sm:p-14 shadow-2xl relative overflow-hidden mb-12">
+      {/* 3. NUEVA SECCIÓN: Próxima Actividad con Imágenes Grandes y Galería Interactiva */}
+      <section id="proxima-actividad" className="py-20 px-6 max-w-7xl mx-auto">
+        <div className="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white rounded-3xl p-8 sm:p-14 shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 right-0 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl"></div>
           
           <div className="relative z-10 max-w-4xl mx-auto text-center">
@@ -121,22 +160,22 @@ export default function App() {
               Hay familias, niñas, niños y perritos viviendo en situación vulnerable en el basurero municipal de Tijuana que necesitan de nuestro apoyo[cite: 35]. Súmate con tu donativo en especie, aportación económica o participando como voluntario[cite: 35, 36].
             </p>
 
-            {/* Galería de imágenes dentro del mismo cuadro */}
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 my-10">
-              <div className="overflow-hidden rounded-2xl shadow-md h-36 bg-slate-800 border border-white/10">
-                <img src={imgRelleno1} alt="Relleno Sanitario 1" className="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy" />
-              </div>
-              <div className="overflow-hidden rounded-2xl shadow-md h-36 bg-slate-800 border border-white/10">
-                <img src={imgRelleno2} alt="Relleno Sanitario 2" className="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy" />
-              </div>
-              <div className="overflow-hidden rounded-2xl shadow-md h-36 bg-slate-800 border border-white/10">
-                <img src={imgRelleno3} alt="Relleno Sanitario 3" className="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy" />
-              </div>
-              <div className="overflow-hidden rounded-2xl shadow-md h-36 bg-slate-800 border border-white/10">
-                <img src={imgRelleno4} alt="Relleno Sanitario 4" className="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy" />
-              </div>
-              <div className="overflow-hidden rounded-2xl shadow-md h-36 bg-slate-800 border border-white/10 col-span-2 sm:col-span-1">
-                <img src={imgRelleno5} alt="Relleno Sanitario 5" className="w-full h-full object-cover hover:scale-110 transition-transform duration-300" loading="lazy" />
+            {/* Galería de Imágenes Grandes (Clickeables) */}
+            <div className="mb-10 text-left">
+              <p className="text-xs font-semibold text-teal-300 uppercase tracking-widest text-center mb-4">Haz clic en cualquier imagen para conocer su historia y verla en grande</p>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
+                {galeriaHistorias.map((item, idx) => (
+                  <div 
+                    key={idx} 
+                    onClick={() => setLightboxIndex(idx)}
+                    className="group relative overflow-hidden rounded-2xl shadow-xl h-52 bg-slate-800 border-2 border-white/20 cursor-pointer transform transition-all duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:border-teal-400"
+                  >
+                    <img src={item.img} alt={item.titulo} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" loading="lazy" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex items-end p-4">
+                      <span className="text-xs font-bold text-white group-hover:text-teal-300 transition-colors">🔍 Ver historia</span>
+                    </div>
+                  </div>
+                ))}
               </div>
             </div>
 
@@ -183,7 +222,7 @@ export default function App() {
       </section>
 
       {/* 4. Sección de 'Quiénes Somos' + Socios Fundadores */}
-      <section id="quienes-somos" className="py-28 px-6 max-w-7xl mx-auto">
+      <section id="quienes-somos" className="py-20 px-6 max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-blue-600 font-bold text-sm tracking-widest uppercase bg-blue-50 px-3.5 py-1 rounded-full">Institucional</span>
           <h2 className="text-3xl sm:text-4xl font-black text-slate-900 mt-3 mb-4 tracking-tight">¿Quiénes Somos?</h2>
@@ -225,7 +264,7 @@ export default function App() {
         </div>
 
         {/* Socios Fundadores */}
-        <div className="mt-20">
+        <div className="mt-16">
           <div className="text-center mb-20">
             <span className="text-teal-600 font-bold text-sm tracking-widest uppercase bg-teal-50 px-3.5 py-1 rounded-full">Liderazgo</span>
             <h3 className="text-3xl sm:text-4xl font-black text-slate-900 mt-3 tracking-tight">Consejo Directivo y Socios Fundadores</h3>
@@ -293,7 +332,7 @@ export default function App() {
       </section>
 
       {/* 5. Sección de 'Nuestros Cuatro Ejes Operativos' */}
-      <section id="ejes" className="py-28 bg-slate-100/70 px-6 border-y border-slate-200/60">
+      <section id="ejes" className="py-20 bg-slate-100/70 px-6 border-y border-slate-200/60">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
             <span className="text-blue-600 font-bold text-sm tracking-widest uppercase bg-blue-50 px-3.5 py-1 rounded-full">Ejes Especializados</span>
@@ -587,7 +626,7 @@ export default function App() {
       </section>
 
       {/* 6. Sección de Contacto */}
-      <section id="contacto" className="py-28 px-6 max-w-6xl mx-auto">
+      <section id="contacto" className="py-20 px-6 max-w-6xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-blue-600 font-bold text-sm tracking-widest uppercase bg-blue-50 px-3.5 py-1 rounded-full">Ubicación y Enlace</span>
           <h2 className="text-3xl sm:text-5xl font-black text-slate-900 mt-3 mb-4 tracking-tight">Ponte en contacto</h2>
@@ -647,7 +686,65 @@ export default function App() {
         </div>
       </footer>
 
-      {/* Modal */}
+      {/* MODAL LIGHTBOX DE GALERÍA CON HISTORIAS EMOTIVAS */}
+      {lightboxIndex !== null && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 animate-fade-in">
+          {/* Botón Cerrar (X) */}
+          <button 
+            onClick={() => setLightboxIndex(null)}
+            className="absolute top-6 right-6 text-white bg-white/10 hover:bg-white/20 p-3 rounded-full text-xl z-50 transition-colors"
+          >
+            ✕
+          </button>
+
+          {/* Botón Anterior */}
+          <button 
+            onClick={prevImage}
+            className="absolute left-4 sm:left-8 text-white bg-white/10 hover:bg-white/20 p-4 rounded-full text-2xl z-50 transition-colors"
+          >
+            ❮
+          </button>
+
+          {/* Botón Siguiente */}
+          <button 
+            onClick={nextImage}
+            className="absolute right-4 sm:right-8 text-white bg-white/10 hover:bg-white/20 p-4 rounded-full text-2xl z-50 transition-colors"
+          >
+            ❯
+          </button>
+
+          {/* Contenedor de la Galería con la Foto y la Historia Emotiva */}
+          <div className="bg-slate-900 border border-white/10 rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto grid md:grid-cols-2 shadow-2xl text-white">
+            <div className="h-72 md:h-full bg-black flex items-center justify-center p-2">
+              <img 
+                src={galeriaHistorias[lightboxIndex].img} 
+                alt="Galería Relleno Sanitario" 
+                className="max-h-full max-w-full object-contain rounded-2xl"
+              />
+            </div>
+            <div className="p-8 sm:p-10 flex flex-col justify-center">
+              <span className="text-teal-400 text-xs font-bold uppercase tracking-widest mb-2">Historia de Vida • Relleno Sanitario</span>
+              <h3 className="text-2xl sm:text-3xl font-black mb-4">{galeriaHistorias[lightboxIndex].titulo}</h3>
+              <p className="text-slate-300 text-sm sm:text-base leading-relaxed font-light mb-6">
+                "{galeriaHistorias[lightboxIndex].historia}"
+              </p>
+              <div className="pt-4 border-t border-white/10 flex items-center justify-between">
+                <span className="text-xs text-slate-400">Imagen {lightboxIndex + 1} de {galeriaHistorias.length}</span>
+                <a 
+                  href="https://wa.me/6644910531" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold text-xs px-4 py-2.5 rounded-xl transition-colors"
+                >
+                  💬 Apoyar esta causa
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal General */}
       {modalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fade-in">
           <div className="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl relative text-center">
