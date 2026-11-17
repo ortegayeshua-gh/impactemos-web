@@ -8,6 +8,13 @@ import logoCorazon from './assets/corazon.png';
 import fotoYeshua from './assets/yeshua.png';
 import fotoKevin from './assets/kevin.png';
 
+// Importación de las 5 imágenes de la nueva actividad
+import imgRelleno1 from './assets/RellenoSanitario2026-1.avif';
+import imgRelleno2 from './assets/RellenoSanitario2026-2.avif';
+import imgRelleno3 from './assets/RellenoSanitario2026-3.avif';
+import imgRelleno4 from './assets/RellenoSanitario2026-4.avif';
+import imgRelleno5 from './assets/RellenoSanitario2026-5.avif';
+
 export default function App() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
@@ -29,7 +36,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased selection:bg-blue-600 selection:text-white scroll-smooth">
-      {/* 1. Barra de navegación fija con logotipo enlazado al inicio y botones separados */}
+      {/* 1. Barra de navegación fija */}
       <header className="bg-white/90 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-50 shadow-xs transition-all duration-300">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <a href="#inicio" className="flex items-center space-x-3 cursor-pointer">
@@ -42,6 +49,7 @@ export default function App() {
           </a>
           <nav className="hidden md:flex space-x-8 font-medium text-sm text-slate-600">
             <a href="#inicio" className="hover:text-blue-600 transition-colors duration-200">Inicio</a>
+            <a href="#proxima-actividad" className="hover:text-blue-600 transition-colors duration-200">Próxima Actividad</a>
             <a href="#quienes-somos" className="hover:text-blue-600 transition-colors duration-200">Quiénes Somos</a>
             <a href="#ejes" className="hover:text-blue-600 transition-colors duration-200">Cuatro Ejes</a>
             <a href="#contacto" className="hover:text-blue-600 transition-colors duration-200">Contacto</a>
@@ -67,7 +75,7 @@ export default function App() {
         </div>
       </header>
 
-      {/* 2. Sección Hero (Sin la frase solicitada) */}
+      {/* 2. Sección Hero */}
       <section id="inicio" className="relative overflow-hidden bg-slate-900 text-white py-28 sm:py-36 px-6 text-center">
         <div className="absolute inset-0 opacity-15 bg-[radial-gradient(#3b82f6_1px,transparent_1px)] [background-size:16px_16px]"></div>
         <div className="absolute -top-40 -right-40 w-96 h-96 bg-blue-600/20 rounded-full blur-3xl"></div>
@@ -82,22 +90,93 @@ export default function App() {
           </p>
           <div className="flex flex-col sm:flex-row justify-center gap-4">
             <a 
-              href="#ejes" 
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-8 py-4 rounded-2xl shadow-xl shadow-blue-600/30 transition-all duration-300 hover:-translate-y-0.5"
+              href="#proxima-actividad" 
+              className="bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold px-8 py-4 rounded-2xl shadow-xl shadow-teal-500/20 transition-all duration-300 hover:-translate-y-0.5"
             >
-              Conoce nuestros 4 ejes
+              🌟 Apoya Nuestra Próxima Actividad
             </a>
             <a 
-              href="#quienes-somos" 
+              href="#ejes" 
               className="bg-white/5 hover:bg-white/10 text-white font-semibold px-8 py-4 rounded-2xl border border-white/10 backdrop-blur-md transition-all duration-300 hover:-translate-y-0.5"
             >
-              Nuestra Misión y Visión
+              Conoce nuestros 4 ejes
             </a>
           </div>
         </div>
       </section>
 
-      {/* 3. Sección de 'Quiénes Somos' + Socios Fundadores */}
+      {/* 3. NUEVA SECCIÓN: Próxima Actividad (Llevemos Esperanza al Relleno Sanitario de Tijuana) */}
+      <section id="proxima-actividad" className="py-28 px-6 max-w-7xl mx-auto">
+        <div className="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white rounded-3xl p-8 sm:p-14 shadow-2xl relative overflow-hidden mb-16">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl"></div>
+          
+          <div className="relative z-10 max-w-3xl mx-auto text-center">
+            <span className="inline-block bg-teal-500/20 border border-teal-400/30 text-teal-300 text-xs sm:text-sm font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-6">
+              Próxima Actividad Comunitaria
+            </span>
+            <h2 className="text-3xl sm:text-5xl font-black tracking-tight mb-6 leading-tight">
+              Llevemos Esperanza al Relleno Sanitario de Tijuana
+            </h2>
+            <p className="text-slate-300 text-base sm:text-lg mb-8 leading-relaxed font-light">
+              Súmate a esta noble causa con tu donativo en artículos o aportación económica. Tu ayuda llega directamente a quienes más lo necesitan, construyendo momentos de alegría y apoyo comunitario. ¡Sé parte del cambio!
+            </p>
+
+            {/* Botones de acción requeridos */}
+            <div className="flex flex-wrap justify-center gap-4">
+              <a 
+                href="https://forms.gle/4dv2DtafZyp1G6KVA" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3.5 rounded-2xl shadow-lg transition-all duration-300 text-sm flex items-center space-x-2"
+              >
+                <span>📝 Regístrate como Voluntario</span>
+              </a>
+              <a 
+                href="https://paypal.me/impactemosmx" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold px-6 py-3.5 rounded-2xl shadow-lg transition-all duration-300 text-sm flex items-center space-x-2"
+              >
+                <span>💳 Dona en Dinero (PayPal)</span>
+              </a>
+              <a 
+                href="https://wa.me/6644910531" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-3.5 rounded-2xl shadow-lg transition-all duration-300 text-sm flex items-center space-x-2"
+              >
+                <span>💬 WhatsApp con Kevin</span>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        {/* Galería Fotográfica de Años Anteriores */}
+        <div className="text-center mb-10">
+          <h3 className="text-2xl font-black text-slate-900 mb-2">Momentos que Inspiran (Ediciones Anteriores)</h3>
+          <p className="text-slate-600 text-sm">Así hemos llevado sonrisas y apoyo en años pasados.</p>
+        </div>
+
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="relative group overflow-hidden rounded-3xl shadow-xl h-64 bg-slate-200">
+            <img src={imgRelleno1} alt="Actividad anterior 1" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+          </div>
+          <div className="relative group overflow-hidden rounded-3xl shadow-xl h-64 bg-slate-200">
+            <img src={imgRelleno2} alt="Actividad anterior 2" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+          </div>
+          <div className="relative group overflow-hidden rounded-3xl shadow-xl h-64 bg-slate-200">
+            <img src={imgRelleno3} alt="Actividad anterior 3" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+          </div>
+          <div className="relative group overflow-hidden rounded-3xl shadow-xl h-64 bg-slate-200 sm:col-span-1 lg:col-span-1.5">
+            <img src={imgRelleno4} alt="Actividad anterior 4" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+          </div>
+          <div className="relative group overflow-hidden rounded-3xl shadow-xl h-64 bg-slate-200 sm:col-span-1 lg:col-span-1.5">
+            <img src={imgRelleno5} alt="Actividad anterior 5" className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" loading="lazy" />
+          </div>
+        </div>
+      </section>
+
+      {/* 4. Sección de 'Quiénes Somos' + Socios Fundadores */}
       <section id="quienes-somos" className="py-28 px-6 max-w-7xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-blue-600 font-bold text-sm tracking-widest uppercase bg-blue-50 px-3.5 py-1 rounded-full">Institucional</span>
@@ -207,7 +286,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 4. Sección de 'Nuestros Cuatro Ejes Operativos' */}
+      {/* 5. Sección de 'Nuestros Cuatro Ejes Operativos' */}
       <section id="ejes" className="py-28 bg-slate-100/70 px-6 border-y border-slate-200/60">
         <div className="max-w-7xl mx-auto">
           <div className="text-center max-w-3xl mx-auto mb-16">
@@ -501,7 +580,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* 5. Sección de Contacto */}
+      {/* 6. Sección de Contacto */}
       <section id="contacto" className="py-28 px-6 max-w-6xl mx-auto">
         <div className="text-center max-w-3xl mx-auto mb-16">
           <span className="text-blue-600 font-bold text-sm tracking-widest uppercase bg-blue-50 px-3.5 py-1 rounded-full">Ubicación y Enlace</span>
