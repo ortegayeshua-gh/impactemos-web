@@ -15,6 +15,9 @@ import imgRelleno3 from './assets/RellenoSanitario2026-3.avif';
 import imgRelleno4 from './assets/RellenoSanitario2026-4.avif';
 import imgRelleno5 from './assets/RellenoSanitario2026-5.avif';
 
+// Enlace oficial de WhatsApp con mensaje predeterminado
+const whatsappUrl = "https://api.whatsapp.com/send?phone=+526644910531&text=Hola%20Kevin,%20quiero%20sumarme%20a%20la%20siguiente%20actividad.%20%F0%9F%92%99%20%C2%BFComo%20puedo%20ayudar%3F%20%E2%9C%A8";
+
 // Historias emotivas asociadas a cada fotografía
 const galeriaHistorias = [
   {
@@ -237,7 +240,7 @@ export default function App() {
                 <span>💳 Dona en Dinero (PayPal)</span>
               </a>
               <a 
-                href="https://wa.me/6644910531" 
+                href={whatsappUrl} 
                 target="_blank" 
                 rel="noopener noreferrer"
                 className="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-3.5 rounded-2xl shadow-lg transition-all duration-300 text-sm flex items-center space-x-2"
@@ -793,7 +796,7 @@ export default function App() {
               <div className="pt-6 border-t border-white/10 flex items-center justify-between">
                 <span className="text-xs text-slate-400">Imagen {lightboxIndex + 1} de {galeriaHistorias.length}</span>
                 <a 
-                  href="https://wa.me/6644910531" 
+                  href={whatsappUrl} 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold text-sm px-5 py-3 rounded-xl transition-colors shadow-lg"
