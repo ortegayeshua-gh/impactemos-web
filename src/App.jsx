@@ -15,7 +15,7 @@ import imgRelleno3 from './assets/RellenoSanitario2026-3.avif';
 import imgRelleno4 from './assets/RellenoSanitario2026-4.avif';
 import imgRelleno5 from './assets/RellenoSanitario2026-5.avif';
 
-// Historias emotivas asociadas a cada fotografía (la última enfocada en los perritos)
+// Historias emotivas asociadas a cada fotografía
 const galeriaHistorias = [
   {
     img: imgRelleno1,
@@ -72,6 +72,22 @@ export default function App() {
   const prevImage = () => {
     setLightboxIndex((prev) => (prev - 1 + galeriaHistorias.length) % galeriaHistorias.length);
   };
+
+  // Funcionalidad de teclado (Flechas izq/der y tecla ESC)
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (lightboxIndex === null) return;
+      if (e.key === 'ArrowRight') {
+        nextImage();
+      } else if (e.key === 'ArrowLeft') {
+        prevImage();
+      } else if (e.key === 'Escape') {
+        setLightboxIndex(null);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [lightboxIndex]);
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased selection:bg-blue-600 selection:text-white scroll-smooth">
@@ -698,7 +714,7 @@ export default function App() {
         </div>
       </footer>
 
-      {/* MODAL LIGHTBOX DE GALERÍA CON HISTORIAS EMOTIVAS */}
+      {/* MODAL LIGHTBOX DE GALERÍA (AJUSTADO A GRANDE Y CON TECLADO) */}
       {lightboxIndex !== null && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md p-4 animate-fade-in">
           {/* Botón Cerrar (X) */}
@@ -725,28 +741,28 @@ export default function App() {
             ❯
           </button>
 
-          {/* Contenedor de la Galería con la Foto y la Historia Emotiva */}
-          <div className="bg-slate-900 border border-white/10 rounded-3xl max-w-4xl w-full max-h-[90vh] overflow-y-auto grid md:grid-cols-2 shadow-2xl text-white">
-            <div className="h-72 md:h-full bg-black flex items-center justify-center p-2">
+          {/* Contenedor Grande y Ajustado */}
+          <div className="bg-slate-900 border border-white/10 rounded-3xl max-w-6xl w-full max-h-[92vh] overflow-hidden grid md:grid-cols-2 shadow-2xl text-white">
+            <div className="h-80 md:h-[650px] bg-black flex items-center justify-center p-4">
               <img 
                 src={galeriaHistorias[lightboxIndex].img} 
                 alt="Galería Relleno Sanitario" 
-                className="max-h-full max-w-full object-contain rounded-2xl"
+                className="w-full h-full object-cover rounded-2xl shadow-inner"
               />
             </div>
-            <div className="p-8 sm:p-10 flex flex-col justify-center">
-              <span className="text-teal-400 text-xs font-bold uppercase tracking-widest mb-2">Historia de Vida • Relleno Sanitario</span>
-              <h3 className="text-2xl sm:text-3xl font-black mb-4">{galeriaHistorias[lightboxIndex].titulo}</h3>
-              <p className="text-slate-300 text-sm sm:text-base leading-relaxed font-light mb-6">
+            <div className="p-8 sm:p-12 flex flex-col justify-center">
+              <span className="text-teal-400 text-xs font-bold uppercase tracking-widest mb-3">Historia de Vida • Relleno Sanitario</span>
+              <h3 className="text-3xl sm:text-4xl font-black mb-6">{galeriaHistorias[lightboxIndex].titulo}</h3>
+              <p className="text-slate-300 text-base sm:text-lg leading-relaxed font-light mb-8">
                 "{galeriaHistorias[lightboxIndex].historia}"
               </p>
-              <div className="pt-4 border-t border-white/10 flex items-center justify-between">
+              <div className="pt-6 border-t border-white/10 flex items-center justify-between">
                 <span className="text-xs text-slate-400">Imagen {lightboxIndex + 1} de {galeriaHistorias.length}</span>
                 <a 
                   href="https://wa.me/6644910531" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold text-xs px-4 py-2.5 rounded-xl transition-colors"
+                  className="bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold text-sm px-5 py-3 rounded-xl transition-colors shadow-lg"
                 >
                   💬 Apoyar esta causa
                 </a>
