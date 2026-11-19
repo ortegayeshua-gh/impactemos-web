@@ -18,6 +18,9 @@ import imgRelleno5 from './assets/RellenoSanitario2026-5.avif';
 // Enlace oficial de WhatsApp con mensaje predeterminado
 const whatsappUrl = "https://api.whatsapp.com/send?phone=+526644910531&text=Hola%20Kevin,%20quiero%20sumarme%20a%20la%20siguiente%20actividad.%20%F0%9F%92%99%20%C2%BFComo%20puedo%20ayudar%3F%20%E2%9C%A8";
 
+// Fecha objetivo: 12 de diciembre de 2026 a las 10:00 AM (Hora de Tijuana PST -08:00)
+const TARGET_DATE = new Date('2026-12-12T10:00:00-08:00').getTime();
+
 // Historias emotivas asociadas a cada fotografía
 const galeriaHistorias = [
   {
@@ -54,6 +57,42 @@ export default function App() {
 
   // Estado para la galería interactiva en pantalla completa (Lightbox)
   const [lightboxIndex, setLightboxIndex] = useState(null);
+
+  // Estado para la cuenta regresiva automatizada
+  const [timeLeft, setTimeLeft] = useState(() => {
+    const difference = TARGET_DATE - Date.now();
+    if (difference <= 0) {
+      return { dias: 0, horas: 0, minutos: 0, segundos: 0, finalizado: true };
+    }
+    return {
+      dias: Math.floor(difference / (1000 * 60 * 60 * 24)),
+      horas: Math.floor((difference / (1000 * 60 * 60)) % 24),
+      minutos: Math.floor((difference / 1000 / 60) % 60),
+      segundos: Math.floor((difference / 1000) % 60),
+      finalizado: false
+    };
+  });
+
+  // Actualización automática cada segundo
+  useEffect(() => {
+    const timer = setInterval(() => {
+      const difference = TARGET_DATE - Date.now();
+      if (difference <= 0) {
+        setTimeLeft({ dias: 0, horas: 0, minutos: 0, segundos: 0, finalizado: true });
+        clearInterval(timer);
+      } else {
+        setTimeLeft({
+          dias: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          horas: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutos: Math.floor((difference / 1000 / 60) % 60),
+          segundos: Math.floor((difference / 1000) % 60),
+          finalizado: false
+        });
+      }
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
 
   useEffect(() => {
     const link = document.querySelector("link[rel*='icon']") || document.createElement('link');
@@ -163,14 +202,14 @@ export default function App() {
         </div>
       </section>
 
-      {/* 3. NUEVA SECCIÓN: Próxima Actividad con Imágenes Grandes y Galería Interactiva */}
+      {/* 3. SECCIÓN: Próxima Actividad con Cuenta Regresiva, Imágenes Grandes y Galería Interactiva */}
       <section id="proxima-actividad" className="py-20 px-6 max-w-7xl mx-auto">
         <div className="bg-gradient-to-br from-slate-900 via-blue-950 to-slate-900 text-white rounded-3xl p-8 sm:p-14 shadow-2xl relative overflow-hidden">
           <div className="absolute top-0 right-0 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl"></div>
           
           <div className="relative z-10 max-w-4xl mx-auto text-center">
             <span className="inline-block bg-teal-500/20 border border-teal-400/30 text-teal-300 text-xs sm:text-sm font-bold px-4 py-1.5 rounded-full uppercase tracking-wider mb-6">
-              Próxima Jornada: Sábado 12 de Diciembre de 2026
+              Próxima Jornada: Sábado 12 de Diciembre de 2026 • 10:00 AM
             </span>
             <h2 className="text-3xl sm:text-5xl font-black tracking-tight mb-6 leading-tight">
               Llevemos Esperanza al Relleno Sanitario de Tijuana
@@ -178,6 +217,58 @@ export default function App() {
             <p className="text-slate-300 text-base sm:text-lg mb-8 leading-relaxed font-light max-w-3xl mx-auto">
               Hay familias, niñas, niños y perritos viviendo en situación vulnerable en el basurero municipal de Tijuana que necesitan de nuestro apoyo. Súmate con tu donativo en especie, aportación económica o participando como voluntario.
             </p>
+
+            {/* CUENTA REGRESIVA AUTOMATIZADA */}
+            <div className="bg-white/5 backdrop-blur-md border border-teal-400/25 rounded-2xl p-6 sm:p-8 max-w-2xl mx-auto mb-10 shadow-xl">
+              {timeLeft.finalizado ? (
+                <p className="text-xl sm:text-2xl font-black text-teal-300">
+                  🌟 ¡Hoy es el gran día! Unidos estamos haciendo el cambio en el relleno sanitario.
+                </p>
+              ) : (
+                <>
+                  <p className="text-xs sm:text-sm font-bold text-teal-300 uppercase tracking-widest mb-4">
+                    ⏳ Faltan:
+                  </p>
+                  <div className="grid grid-cols-4 gap-3 sm:gap-5 mb-5">
+                    <div className="bg-slate-950/60 border border-white/10 rounded-2xl py-3 sm:py-4 px-2 flex flex-col items-center justify-center shadow-inner">
+                      <span className="text-2xl sm:text-4xl font-black text-white tabular-nums">
+                        {String(timeLeft.dias).padStart(2, '0')}
+                      </span>
+                      <span className="text-[10px] sm:text-xs font-semibold text-teal-300 uppercase tracking-wider mt-1">
+                        Días
+                      </span>
+                    </div>
+                    <div className="bg-slate-950/60 border border-white/10 rounded-2xl py-3 sm:py-4 px-2 flex flex-col items-center justify-center shadow-inner">
+                      <span className="text-2xl sm:text-4xl font-black text-white tabular-nums">
+                        {String(timeLeft.horas).padStart(2, '0')}
+                      </span>
+                      <span className="text-[10px] sm:text-xs font-semibold text-teal-300 uppercase tracking-wider mt-1">
+                        Horas
+                      </span>
+                    </div>
+                    <div className="bg-slate-950/60 border border-white/10 rounded-2xl py-3 sm:py-4 px-2 flex flex-col items-center justify-center shadow-inner">
+                      <span className="text-2xl sm:text-4xl font-black text-white tabular-nums">
+                        {String(timeLeft.minutos).padStart(2, '0')}
+                      </span>
+                      <span className="text-[10px] sm:text-xs font-semibold text-teal-300 uppercase tracking-wider mt-1">
+                        Minutos
+                      </span>
+                    </div>
+                    <div className="bg-slate-950/60 border border-white/10 rounded-2xl py-3 sm:py-4 px-2 flex flex-col items-center justify-center shadow-inner">
+                      <span className="text-2xl sm:text-4xl font-black text-teal-400 tabular-nums">
+                        {String(timeLeft.segundos).padStart(2, '0')}
+                      </span>
+                      <span className="text-[10px] sm:text-xs font-semibold text-teal-300 uppercase tracking-wider mt-1">
+                        Segundos
+                      </span>
+                    </div>
+                  </div>
+                  <p className="text-sm sm:text-base font-medium text-slate-200">
+                    ...para que <span className="text-teal-300 font-bold">unidos hagamos el cambio</span> en el relleno sanitario 💙
+                  </p>
+                </>
+              )}
+            </div>
 
             {/* Galería de Imágenes Grandes (Clickeables) */}
             <div className="mb-10 text-left">
