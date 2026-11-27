@@ -21,6 +21,12 @@ const whatsappUrl = "https://api.whatsapp.com/send?phone=+526644910531&text=Hola
 // Fecha objetivo: 12 de diciembre de 2026 a las 10:00 AM (Hora de Tijuana PST -08:00)
 const TARGET_DATE = new Date('2026-12-12T10:00:00-08:00').getTime();
 
+// Configuración del botón hospedado de PayPal
+const PAYPAL_SDK_SRC =
+  "https://www.paypal.com/sdk/js?client-id=BAA-MBWzHUPXsY9cvzJk5D_2PDZayuBeHzwM87T0ev4pzpMErDkFr6dpNajxyBnNnRVTwqMnzVkuYg7iTI&components=hosted-buttons&disable-funding=venmo&currency=MXN";
+const PAYPAL_HOSTED_BUTTON_ID = "DKQJTK52VWM9S";
+const PAYPAL_CONTAINER_ID = `paypal-container-${PAYPAL_HOSTED_BUTTON_ID}`;
+
 // Historias emotivas asociadas a cada fotografía
 const galeriaHistorias = [
   {
@@ -92,6 +98,46 @@ export default function App() {
     }, 1000);
 
     return () => clearInterval(timer);
+  }, []);
+
+  // Carga e inicialización del botón hospedado de PayPal
+  useEffect(() => {
+    let isCancelled = false;
+
+    const renderHostedButton = () => {
+      if (isCancelled) return;
+      const container = document.getElementById(PAYPAL_CONTAINER_ID);
+      if (container && window.paypal && typeof window.paypal.HostedButtons === 'function') {
+        container.innerHTML = '';
+        window.paypal.HostedButtons({
+          hostedButtonId: PAYPAL_HOSTED_BUTTON_ID
+        }).render(`#${PAYPAL_CONTAINER_ID}`);
+      }
+    };
+
+    const existingScript = document.querySelector(`script[src="${PAYPAL_SDK_SRC}"]`);
+    if (existingScript) {
+      if (window.paypal && typeof window.paypal.HostedButtons === 'function') {
+        renderHostedButton();
+      } else {
+        existingScript.addEventListener('load', renderHostedButton);
+      }
+      return () => {
+        isCancelled = true;
+        existingScript.removeEventListener('load', renderHostedButton);
+      };
+    }
+
+    const script = document.createElement('script');
+    script.src = PAYPAL_SDK_SRC;
+    script.async = true;
+    script.addEventListener('load', renderHostedButton);
+    document.head.appendChild(script);
+
+    return () => {
+      isCancelled = true;
+      script.removeEventListener('load', renderHostedButton);
+    };
   }, []);
 
   useEffect(() => {
@@ -312,8 +358,8 @@ export default function App() {
               </ul>
             </div>
 
-            {/* Botones de Acción */}
-            <div className="flex flex-wrap justify-center gap-4">
+            {/* Botones principales de participación */}
+            <div className="flex flex-wrap justify-center gap-4 mb-10">
               <a 
                 href="https://forms.gle/4dv2DtafZyp1G6KVA" 
                 target="_blank" 
@@ -323,14 +369,6 @@ export default function App() {
                 <span>📝 Regístrate como Voluntario</span>
               </a>
               <a 
-                href="https://paypal.me/impactemosmx" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="bg-teal-500 hover:bg-teal-600 text-slate-950 font-bold px-6 py-3.5 rounded-2xl shadow-lg transition-all duration-300 text-sm flex items-center space-x-2"
-              >
-                <span>💳 Dona en Dinero (PayPal)</span>
-              </a>
-              <a 
                 href={whatsappUrl} 
                 target="_blank" 
                 rel="noopener noreferrer"
@@ -338,6 +376,20 @@ export default function App() {
               >
                 <span>💬 Mensaje a Kevin (Donación en Especie)</span>
               </a>
+            </div>
+
+            {/* Apartado directo de donación en PayPal */}
+            <div className="bg-white text-slate-900 rounded-2xl p-6 sm:p-8 max-w-md mx-auto shadow-2xl border border-white/20">
+              <p className="text-xs font-bold uppercase tracking-widest text-blue-700 mb-1">
+                Aportación Económica Directa
+              </p>
+              <h3 className="text-xl font-black text-slate-900 mb-2">
+                Dona con PayPal
+              </h3>
+              <p className="text-xs sm:text-sm text-slate-600 mb-5">
+                Ingresa el monto que desees aportar en MXN mediante PayPal, tarjeta de débito o crédito.
+              </p>
+              <div id={PAYPAL_CONTAINER_ID} className="w-full min-h-[120px] flex items-center justify-center"></div>
             </div>
           </div>
         </div>
