@@ -21,9 +21,6 @@ const whatsappUrl = "https://api.whatsapp.com/send?phone=+526644910531&text=Hola
 // Fecha objetivo: 12 de diciembre de 2026 a las 10:00 AM (Hora de Tijuana PST -08:00)
 const TARGET_DATE = new Date('2026-12-12T10:00:00-08:00').getTime();
 
-// Configuración del botón hospedado de PayPal
-const PAYPAL_SDK_SRC =
-  "https://www.paypal.com/sdk/js?client-id=BAA-MBWzHUPXsY9cvzJk5D_2PDZayuBeHzwM87T0ev4pzpMErDkFr6dpNajxyBnNnRVTwqMnzVkuYg7iTI&components=hosted-buttons&disable-funding=venmo&currency=MXN";
 const PAYPAL_HOSTED_BUTTON_ID = "DKQJTK52VWM9S";
 const PAYPAL_CONTAINER_ID = `paypal-container-${PAYPAL_HOSTED_BUTTON_ID}`;
 
@@ -100,44 +97,33 @@ export default function App() {
     return () => clearInterval(timer);
   }, []);
 
-  // Carga e inicialización del botón hospedado de PayPal
+  // Parte 2: Renderizar el botón hospedado de PayPal cuando el SDK esté listo
   useEffect(() => {
-    let isCancelled = false;
+    let attempts = 0;
+    const maxAttempts = 40;
 
-    const renderHostedButton = () => {
-      if (isCancelled) return;
+    const tryRenderPayPal = () => {
       const container = document.getElementById(PAYPAL_CONTAINER_ID);
       if (container && window.paypal && typeof window.paypal.HostedButtons === 'function') {
         container.innerHTML = '';
         window.paypal.HostedButtons({
           hostedButtonId: PAYPAL_HOSTED_BUTTON_ID
         }).render(`#${PAYPAL_CONTAINER_ID}`);
+        return true;
       }
+      return false;
     };
 
-    const existingScript = document.querySelector(`script[src="${PAYPAL_SDK_SRC}"]`);
-    if (existingScript) {
-      if (window.paypal && typeof window.paypal.HostedButtons === 'function') {
-        renderHostedButton();
-      } else {
-        existingScript.addEventListener('load', renderHostedButton);
+    if (tryRenderPayPal()) return;
+
+    const interval = setInterval(() => {
+      attempts += 1;
+      if (tryRenderPayPal() || attempts >= maxAttempts) {
+        clearInterval(interval);
       }
-      return () => {
-        isCancelled = true;
-        existingScript.removeEventListener('load', renderHostedButton);
-      };
-    }
+    }, 250);
 
-    const script = document.createElement('script');
-    script.src = PAYPAL_SDK_SRC;
-    script.async = true;
-    script.addEventListener('load', renderHostedButton);
-    document.head.appendChild(script);
-
-    return () => {
-      isCancelled = true;
-      script.removeEventListener('load', renderHostedButton);
-    };
+    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -378,7 +364,7 @@ export default function App() {
               </a>
             </div>
 
-            {/* Apartado directo de donación en PayPal */}
+            {/* Parte 2: Apartado directo de donación en PayPal */}
             <div className="bg-white text-slate-900 rounded-2xl p-6 sm:p-8 max-w-md mx-auto shadow-2xl border border-white/20">
               <p className="text-xs font-bold uppercase tracking-widest text-blue-700 mb-1">
                 Aportación Económica Directa
