@@ -53,6 +53,65 @@ const galeriaHistorias = [
   }
 ];
 
+const opcionesActividad = [
+  "Llevemos Esperanza al Relleno Sanitario de Tijuana (12 de Diciembre 2026)",
+  "Voluntariado general / Próximas actividades",
+  "Eje 01: Juntos Somos Más (Asistencia Social)",
+  "Eje 02: EcoImpacto México (Medio Ambiente)",
+  "Eje 03: Zoolidario México (Bienestar Animal)",
+  "Eje 04: Red de Líderes México (Participación Cívica)",
+  "Otra"
+];
+
+const estadosRepublica = [
+  "Aguascalientes",
+  "Baja California",
+  "Baja California Sur",
+  "Campeche",
+  "Chiapas",
+  "Chihuahua",
+  "Ciudad de México",
+  "Coahuila",
+  "Colima",
+  "Durango",
+  "Estado de México",
+  "Guanajuato",
+  "Guerrero",
+  "Hidalgo",
+  "Jalisco",
+  "Michoacán",
+  "Morelos",
+  "Nayarit",
+  "Nuevo León",
+  "Oaxaca",
+  "Puebla",
+  "Querétaro",
+  "Quintana Roo",
+  "San Luis Potosí",
+  "Sinaloa",
+  "Sonora",
+  "Tabasco",
+  "Tamaulipas",
+  "Tlaxcala",
+  "Veracruz",
+  "Yucatán",
+  "Zacatecas",
+  "Extranjero"
+];
+
+const opcionesComoTeEnteraste = [
+  "Instagram",
+  "Facebook",
+  "TikTok",
+  "YouTube",
+  "WhatsApp",
+  "Invitación de un amigo, familiar o conocido",
+  "Página web de Impactemos México",
+  "Escuela, universidad o trabajo",
+  "Evento o módulo presencial",
+  "Otro"
+];
+
 const opcionesGenero = [
   "Mujer",
   "Hombre",
@@ -70,6 +129,7 @@ const opcionesContacto = [
 
 const initialFormState = {
   actividad: "",
+  actividadOtra: "",
   primerApellido: "",
   segundoApellido: "",
   nombres: "",
@@ -82,6 +142,7 @@ const initialFormState = {
   correo: "",
   whatsapp: "",
   comoTeEnteraste: "",
+  comoTeEnterasteOtro: "",
   contacto: [],
   contactoOtro: "",
   comentarios: ""
@@ -205,8 +266,18 @@ export default function App() {
       return;
     }
 
+    if (formData.actividad === "Otra" && !formData.actividadOtra.trim()) {
+      setFormError("Por favor especifica a qué actividad te estás registrando.");
+      return;
+    }
+
     if (formData.genero === "Otros" && !formData.generoOtro.trim()) {
       setFormError("Por favor especifica tu respuesta en la opción 'Otros' de género.");
+      return;
+    }
+
+    if (formData.comoTeEnteraste === "Otro" && !formData.comoTeEnterasteOtro.trim()) {
+      setFormError("Por favor especifica cómo te enteraste de esta actividad.");
       return;
     }
 
@@ -221,10 +292,20 @@ export default function App() {
     }
 
     // Preparar valores finales para Google Sheets
+    const actividadFinal =
+      formData.actividad === "Otra"
+        ? `Otra: ${formData.actividadOtra.trim()}`
+        : formData.actividad.trim();
+
     const generoFinal =
       formData.genero === "Otros"
         ? `Otros: ${formData.generoOtro.trim()}`
         : formData.genero;
+
+    const comoTeEnterasteFinal =
+      formData.comoTeEnteraste === "Otro"
+        ? `Otro: ${formData.comoTeEnterasteOtro.trim()}`
+        : formData.comoTeEnteraste.trim();
 
     const contactoFinal = formData.contacto
       .map((item) =>
@@ -233,7 +314,7 @@ export default function App() {
       .join(", ");
 
     const payload = {
-      actividad: formData.actividad.trim(),
+      actividad: actividadFinal,
       primerApellido: formData.primerApellido.trim(),
       segundoApellido: formData.segundoApellido.trim(),
       nombres: formData.nombres.trim(),
@@ -244,7 +325,7 @@ export default function App() {
       colonia: formData.colonia.trim(),
       correo: formData.correo.trim(),
       whatsapp: formData.whatsapp.trim(),
-      comoTeEnteraste: formData.comoTeEnteraste.trim(),
+      comoTeEnteraste: comoTeEnterasteFinal,
       contacto: contactoFinal,
       comentarios: formData.comentarios.trim()
     };
@@ -1069,7 +1150,7 @@ export default function App() {
                     </div>
                   )}
 
-                  {/* 1. ¿A qué actividad te estás registrando? */}
+                  {/* 1. ¿A qué actividad te estás registrando? (Lista desplegable) */}
                   <div className="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200/80">
                     <label className="block text-sm sm:text-base font-bold text-slate-900">
                       1. ¿A qué actividad te estás registrando? <span className="text-rose-600">*</span>
@@ -1077,15 +1158,30 @@ export default function App() {
                     <p className="text-xs text-slate-500 mt-1 mb-3">
                       Esta información nos ayuda a organizar mejor cada actividad y a darte seguimiento personalizado.
                     </p>
-                    <input
-                      type="text"
+                    <select
                       name="actividad"
                       required
                       value={formData.actividad}
                       onChange={handleInputChange}
-                      placeholder="Ej. Llevemos Esperanza al Relleno Sanitario / Voluntariado general"
                       className="w-full bg-white border border-slate-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 rounded-xl px-4 py-2.5 text-sm outline-none transition-all"
-                    />
+                    >
+                      <option value="">Selecciona una actividad...</option>
+                      {opcionesActividad.map((opcion) => (
+                        <option key={opcion} value={opcion}>
+                          {opcion}
+                        </option>
+                      ))}
+                    </select>
+                    {formData.actividad === "Otra" && (
+                      <input
+                        type="text"
+                        name="actividadOtra"
+                        value={formData.actividadOtra}
+                        onChange={handleInputChange}
+                        placeholder="Escribe el nombre de la actividad..."
+                        className="mt-2.5 w-full bg-white border border-slate-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 rounded-xl px-4 py-2.5 text-sm outline-none transition-all"
+                      />
+                    )}
                   </div>
 
                   {/* 2. Primer Apellido */}
@@ -1198,7 +1294,7 @@ export default function App() {
                     </div>
                   </div>
 
-                  {/* 7. Estado de la República */}
+                  {/* 7. Estado de la República (Lista desplegable alfabética + Extranjero) */}
                   <div className="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200/80">
                     <label className="block text-sm sm:text-base font-bold text-slate-900">
                       7. Estado de la República <span className="text-rose-600">*</span>
@@ -1206,15 +1302,20 @@ export default function App() {
                     <p className="text-xs text-slate-500 mt-1 mb-3">
                       Nos ayuda a identificar desde qué zonas se están uniendo más personas a la causa. Solo lo usaremos con fines estadísticos y de impacto comunitario.
                     </p>
-                    <input
-                      type="text"
+                    <select
                       name="estado"
                       required
                       value={formData.estado}
                       onChange={handleInputChange}
-                      placeholder="Ej. Baja California"
                       className="w-full bg-white border border-slate-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 rounded-xl px-4 py-2.5 text-sm outline-none transition-all"
-                    />
+                    >
+                      <option value="">Selecciona un estado...</option>
+                      {estadosRepublica.map((estado) => (
+                        <option key={estado} value={estado}>
+                          {estado}
+                        </option>
+                      ))}
+                    </select>
                   </div>
 
                   {/* 8. Municipio */}
@@ -1287,20 +1388,35 @@ export default function App() {
                     />
                   </div>
 
-                  {/* 12. ¿Cómo te enteraste de esta actividad? */}
+                  {/* 12. ¿Cómo te enteraste de esta actividad? (Lista desplegable) */}
                   <div className="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200/80">
                     <label className="block text-sm sm:text-base font-bold text-slate-900 mb-3">
                       12. ¿Cómo te enteraste de esta actividad? <span className="text-rose-600">*</span>
                     </label>
-                    <input
-                      type="text"
+                    <select
                       name="comoTeEnteraste"
                       required
                       value={formData.comoTeEnteraste}
                       onChange={handleInputChange}
-                      placeholder="Ej. Redes sociales, un amigo o familiar, página web..."
                       className="w-full bg-white border border-slate-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 rounded-xl px-4 py-2.5 text-sm outline-none transition-all"
-                    />
+                    >
+                      <option value="">Selecciona una opción...</option>
+                      {opcionesComoTeEnteraste.map((opcion) => (
+                        <option key={opcion} value={opcion}>
+                          {opcion}
+                        </option>
+                      ))}
+                    </select>
+                    {formData.comoTeEnteraste === "Otro" && (
+                      <input
+                        type="text"
+                        name="comoTeEnterasteOtro"
+                        value={formData.comoTeEnterasteOtro}
+                        onChange={handleInputChange}
+                        placeholder="Especifica cómo te enteraste..."
+                        className="mt-2.5 w-full bg-white border border-slate-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 rounded-xl px-4 py-2.5 text-sm outline-none transition-all"
+                      />
+                    )}
                   </div>
 
                   {/* 13. ¿Cómo te gustaría mantenerte en contacto con nosotros? */}
