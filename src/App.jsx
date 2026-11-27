@@ -18,6 +18,9 @@ import imgRelleno5 from './assets/RellenoSanitario2026-5.avif';
 // Enlace oficial de WhatsApp con mensaje predeterminado
 const whatsappUrl = "https://api.whatsapp.com/send?phone=+526644910531&text=Hola%20Kevin,%20quiero%20sumarme%20a%20la%20siguiente%20actividad.%20%F0%9F%92%99%20%C2%BFComo%20puedo%20ayudar%3F%20%E2%9C%A8";
 
+// URL de tu Google Apps Script conectada a la hoja Impactemos México | A.C. (pestaña Board)
+const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyrUJRtqUii7Hr1301pvBC_AjeMvoZILGd6khAAMOtUxIhMYp5pn_Tm5F-PTt77gXs3Eg/exec";
+
 // Fecha objetivo: 12 de diciembre de 2026 a las 10:00 AM (Hora de Tijuana PST -08:00)
 const TARGET_DATE = new Date('2026-12-12T10:00:00-08:00').getTime();
 
@@ -50,6 +53,40 @@ const galeriaHistorias = [
   }
 ];
 
+const opcionesGenero = [
+  "Mujer",
+  "Hombre",
+  "No binario",
+  "Prefiero no decirlo",
+  "Otros"
+];
+
+const opcionesContacto = [
+  "Que me envíen información por correo",
+  "Que me envíen info por WhatsApp",
+  "Solo quiero seguirlos en redes sociales",
+  "Otros"
+];
+
+const initialFormState = {
+  actividad: "",
+  primerApellido: "",
+  segundoApellido: "",
+  nombres: "",
+  fechaNacimiento: "",
+  genero: "",
+  generoOtro: "",
+  estado: "",
+  municipio: "",
+  colonia: "",
+  correo: "",
+  whatsapp: "",
+  comoTeEnteraste: "",
+  contacto: [],
+  contactoOtro: "",
+  comentarios: ""
+};
+
 export default function App() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalTitle, setModalTitle] = useState('');
@@ -57,6 +94,13 @@ export default function App() {
 
   // Estado para la galería interactiva en pantalla completa (Lightbox)
   const [lightboxIndex, setLightboxIndex] = useState(null);
+
+  // Estados para el modal de formulario de registro / voluntariado
+  const [registroModalOpen, setRegistroModalOpen] = useState(false);
+  const [formData, setFormData] = useState(initialFormState);
+  const [formError, setFormError] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitSuccess, setSubmitSuccess] = useState(false);
 
   // Estado para la cuenta regresiva automatizada
   const [timeLeft, setTimeLeft] = useState(() => {
@@ -107,6 +151,125 @@ export default function App() {
     setModalOpen(true);
   };
 
+  // Abrir formulario de registro (con actividad prellenada opcional)
+  const openRegistroModal = (actividadDefault = "") => {
+    setFormData({
+      ...initialFormState,
+      actividad: actividadDefault
+    });
+    setFormError("");
+    setSubmitSuccess(false);
+    setRegistroModalOpen(true);
+  };
+
+  const closeRegistroModal = () => {
+    setRegistroModalOpen(false);
+    setFormError("");
+    setSubmitSuccess(false);
+  };
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleContactoToggle = (opcion) => {
+    setFormData((prev) => {
+      const existe = prev.contacto.includes(opcion);
+      const nuevaLista = existe
+        ? prev.contacto.filter((item) => item !== opcion)
+        : [...prev.contacto, opcion];
+      return { ...prev, contacto: nuevaLista };
+    });
+  };
+
+  const handleFormSubmit = async (e) => {
+    e.preventDefault();
+    setFormError("");
+
+    // Validación de campos obligatorios
+    if (
+      !formData.actividad.trim() ||
+      !formData.primerApellido.trim() ||
+      !formData.segundoApellido.trim() ||
+      !formData.nombres.trim() ||
+      !formData.fechaNacimiento ||
+      !formData.estado.trim() ||
+      !formData.municipio.trim() ||
+      !formData.colonia.trim() ||
+      !formData.correo.trim() ||
+      !formData.whatsapp.trim() ||
+      !formData.comoTeEnteraste.trim()
+    ) {
+      setFormError("Por favor completa todos los campos marcados con * antes de enviar.");
+      return;
+    }
+
+    if (formData.genero === "Otros" && !formData.generoOtro.trim()) {
+      setFormError("Por favor especifica tu respuesta en la opción 'Otros' de género.");
+      return;
+    }
+
+    if (formData.contacto.length === 0) {
+      setFormError("Por favor selecciona al menos una opción en '¿Cómo te gustaría mantenerte en contacto con nosotros?'.");
+      return;
+    }
+
+    if (formData.contacto.includes("Otros") && !formData.contactoOtro.trim()) {
+      setFormError("Por favor especifica tu respuesta en la opción 'Otros' de contacto.");
+      return;
+    }
+
+    // Preparar valores finales para Google Sheets
+    const generoFinal =
+      formData.genero === "Otros"
+        ? `Otros: ${formData.generoOtro.trim()}`
+        : formData.genero;
+
+    const contactoFinal = formData.contacto
+      .map((item) =>
+        item === "Otros" ? `Otros: ${formData.contactoOtro.trim()}` : item
+      )
+      .join(", ");
+
+    const payload = {
+      actividad: formData.actividad.trim(),
+      primerApellido: formData.primerApellido.trim(),
+      segundoApellido: formData.segundoApellido.trim(),
+      nombres: formData.nombres.trim(),
+      fechaNacimiento: formData.fechaNacimiento,
+      genero: generoFinal,
+      estado: formData.estado.trim(),
+      municipio: formData.municipio.trim(),
+      colonia: formData.colonia.trim(),
+      correo: formData.correo.trim(),
+      whatsapp: formData.whatsapp.trim(),
+      comoTeEnteraste: formData.comoTeEnteraste.trim(),
+      contacto: contactoFinal,
+      comentarios: formData.comentarios.trim()
+    };
+
+    setIsSubmitting(true);
+
+    try {
+      if (GOOGLE_SCRIPT_URL && GOOGLE_SCRIPT_URL.startsWith("http")) {
+        await fetch(GOOGLE_SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          headers: {
+            "Content-Type": "text/plain;charset=utf-8"
+          },
+          body: JSON.stringify(payload)
+        });
+      }
+      setSubmitSuccess(true);
+    } catch (error) {
+      setFormError("Ocurrió un problema de conexión al enviar tu registro. Intenta de nuevo por favor.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const nextImage = () => {
     setLightboxIndex((prev) => (prev + 1) % galeriaHistorias.length);
   };
@@ -118,18 +281,26 @@ export default function App() {
   // Funcionalidad de teclado (Flechas izq/der y tecla ESC)
   useEffect(() => {
     const handleKeyDown = (e) => {
+      if (e.key === 'Escape') {
+        if (registroModalOpen) {
+          closeRegistroModal();
+          return;
+        }
+        if (lightboxIndex !== null) {
+          setLightboxIndex(null);
+          return;
+        }
+      }
       if (lightboxIndex === null) return;
       if (e.key === 'ArrowRight') {
         nextImage();
       } else if (e.key === 'ArrowLeft') {
         prevImage();
-      } else if (e.key === 'Escape') {
-        setLightboxIndex(null);
       }
     };
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [lightboxIndex]);
+  }, [lightboxIndex, registroModalOpen]);
 
   return (
     <div className="min-h-screen bg-slate-50 text-slate-800 font-sans antialiased selection:bg-blue-600 selection:text-white scroll-smooth">
@@ -152,14 +323,13 @@ export default function App() {
             <a href="#contacto" className="hover:text-blue-600 transition-colors duration-200">Contacto</a>
           </nav>
           <div className="flex items-center space-x-3">
-            <a 
-              href="https://forms.gle/4dv2DtafZyp1G6KVA" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full text-xs sm:text-sm font-semibold shadow-md shadow-blue-500/25 transition-all duration-300 active:scale-95 text-center"
+            <button
+              type="button"
+              onClick={() => openRegistroModal("")}
+              className="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-full text-xs sm:text-sm font-semibold shadow-md shadow-blue-500/25 transition-all duration-300 active:scale-95 text-center cursor-pointer"
             >
               Únete
-            </a>
+            </button>
             <a 
               href="https://paypal.me/impactemosmx" 
               target="_blank" 
@@ -314,14 +484,13 @@ export default function App() {
 
             {/* Botones de Acción */}
             <div className="flex flex-wrap justify-center gap-4">
-              <a 
-                href="https://forms.gle/4dv2DtafZyp1G6KVA" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3.5 rounded-2xl shadow-lg transition-all duration-300 text-sm flex items-center space-x-2"
+              <button
+                type="button"
+                onClick={() => openRegistroModal("Llevemos Esperanza al Relleno Sanitario de Tijuana (12 de Diciembre 2026)")}
+                className="bg-blue-600 hover:bg-blue-700 text-white font-bold px-6 py-3.5 rounded-2xl shadow-lg transition-all duration-300 text-sm flex items-center space-x-2 cursor-pointer"
               >
                 <span>📝 Regístrate como Voluntario</span>
-              </a>
+              </button>
               <a 
                 href="https://paypal.me/impactemosmx" 
                 target="_blank" 
@@ -841,6 +1010,370 @@ export default function App() {
           </div>
         </div>
       </footer>
+
+      {/* MODAL FORMULARIO DE REGISTRO / VOLUNTARIADO */}
+      {registroModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/80 backdrop-blur-md p-3 sm:p-6 overflow-y-auto">
+          <div className="bg-white rounded-3xl max-w-2xl w-full max-h-[92vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden my-auto">
+            {/* Encabezado fijo del formulario con botón X */}
+            <div className="bg-gradient-to-r from-slate-900 via-blue-950 to-slate-900 text-white px-6 sm:px-8 py-5 flex items-start justify-between gap-4 border-b border-white/10">
+              <div>
+                <h3 className="text-xl sm:text-2xl font-black tracking-tight">
+                  💬 ¡Gracias por formar parte!
+                </h3>
+                <p className="text-xs sm:text-sm text-teal-300 mt-1 font-medium">
+                  <span className="text-rose-400 font-bold">*</span> Indica que la pregunta es obligatoria
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={closeRegistroModal}
+                aria-label="Cerrar formulario"
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center text-lg font-bold transition-colors shrink-0 cursor-pointer"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Cuerpo con scroll interno */}
+            <div className="p-6 sm:p-8 overflow-y-auto space-y-6 text-slate-800">
+              {submitSuccess ? (
+                <div className="py-10 px-4 text-center space-y-5">
+                  <div className="w-20 h-20 rounded-full bg-teal-50 text-teal-600 flex items-center justify-center text-4xl mx-auto shadow-inner">
+                    🎉
+                  </div>
+                  <h4 className="text-2xl sm:text-3xl font-black text-slate-900">
+                    ¡Gracias por sumarte a esta causa!
+                  </h4>
+                  <p className="text-slate-600 text-base leading-relaxed max-w-lg mx-auto">
+                    Tu apoyo suma muchísimo. Muy pronto te estaremos escribiendo para agradecerte y contarte más sobre lo que estamos construyendo desde la ciudadanía organizada.
+                  </p>
+                  <p className="text-base font-bold text-blue-700 bg-blue-50 border border-blue-100 rounded-2xl p-4 max-w-lg mx-auto">
+                    💛 En Impactemos México creemos en lo que se puede lograr cuando hay voluntad de ayudar.
+                  </p>
+                  <div className="pt-4">
+                    <button
+                      type="button"
+                      onClick={closeRegistroModal}
+                      className="bg-slate-900 hover:bg-blue-600 text-white font-bold px-8 py-3.5 rounded-2xl shadow-lg transition-colors cursor-pointer"
+                    >
+                      Volver al sitio
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <form onSubmit={handleFormSubmit} className="space-y-6">
+                  {formError && (
+                    <div className="bg-rose-50 border border-rose-200 text-rose-700 text-sm font-medium px-4 py-3 rounded-2xl">
+                      ⚠️ {formError}
+                    </div>
+                  )}
+
+                  {/* 1. ¿A qué actividad te estás registrando? */}
+                  <div className="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200/80">
+                    <label className="block text-sm sm:text-base font-bold text-slate-900">
+                      1. ¿A qué actividad te estás registrando? <span className="text-rose-600">*</span>
+                    </label>
+                    <p className="text-xs text-slate-500 mt-1 mb-3">
+                      Esta información nos ayuda a organizar mejor cada actividad y a darte seguimiento personalizado.
+                    </p>
+                    <input
+                      type="text"
+                      name="actividad"
+                      required
+                      value={formData.actividad}
+                      onChange={handleInputChange}
+                      placeholder="Ej. Llevemos Esperanza al Relleno Sanitario / Voluntariado general"
+                      className="w-full bg-white border border-slate-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 rounded-xl px-4 py-2.5 text-sm outline-none transition-all"
+                    />
+                  </div>
+
+                  {/* 2. Primer Apellido */}
+                  <div className="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200/80">
+                    <label className="block text-sm sm:text-base font-bold text-slate-900">
+                      2. Primer Apellido <span className="text-rose-600">*</span>
+                    </label>
+                    <p className="text-xs text-slate-500 mt-1 mb-3">
+                      (Para poder dirigirnos a ti de forma cercana y personalizada)
+                    </p>
+                    <input
+                      type="text"
+                      name="primerApellido"
+                      required
+                      value={formData.primerApellido}
+                      onChange={handleInputChange}
+                      placeholder="Tu primer apellido"
+                      className="w-full bg-white border border-slate-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 rounded-xl px-4 py-2.5 text-sm outline-none transition-all"
+                    />
+                  </div>
+
+                  {/* 3. Segundo Apellido */}
+                  <div className="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200/80">
+                    <label className="block text-sm sm:text-base font-bold text-slate-900">
+                      3. Segundo Apellido <span className="text-rose-600">*</span>
+                    </label>
+                    <p className="text-xs text-slate-500 mt-1 mb-3">
+                      (Para poder dirigirnos a ti de forma cercana y personalizada)
+                    </p>
+                    <input
+                      type="text"
+                      name="segundoApellido"
+                      required
+                      value={formData.segundoApellido}
+                      onChange={handleInputChange}
+                      placeholder="Tu segundo apellido"
+                      className="w-full bg-white border border-slate-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 rounded-xl px-4 py-2.5 text-sm outline-none transition-all"
+                    />
+                  </div>
+
+                  {/* 4. Nombre(s) */}
+                  <div className="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200/80">
+                    <label className="block text-sm sm:text-base font-bold text-slate-900">
+                      4. Nombre(s) <span className="text-rose-600">*</span>
+                    </label>
+                    <p className="text-xs text-slate-500 mt-1 mb-3">
+                      (Para poder dirigirnos a ti de forma cercana y personalizada)
+                    </p>
+                    <input
+                      type="text"
+                      name="nombres"
+                      required
+                      value={formData.nombres}
+                      onChange={handleInputChange}
+                      placeholder="Tu(s) nombre(s)"
+                      className="w-full bg-white border border-slate-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 rounded-xl px-4 py-2.5 text-sm outline-none transition-all"
+                    />
+                  </div>
+
+                  {/* 5. Fecha de nacimiento */}
+                  <div className="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200/80">
+                    <label className="block text-sm sm:text-base font-bold text-slate-900">
+                      5. Fecha de nacimiento <span className="text-rose-600">*</span>
+                    </label>
+                    <p className="text-xs text-slate-500 mt-1 mb-3">
+                      Esta información es únicamente para fines estadísticos y para conocer mejor el perfil de las personas que se suman a nuestras actividades.
+                    </p>
+                    <input
+                      type="date"
+                      name="fechaNacimiento"
+                      required
+                      value={formData.fechaNacimiento}
+                      onChange={handleInputChange}
+                      className="w-full sm:w-auto bg-white border border-slate-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 rounded-xl px-4 py-2.5 text-sm outline-none transition-all"
+                    />
+                  </div>
+
+                  {/* 6. Género o sexo con el que te identificas (Opcional) */}
+                  <div className="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200/80">
+                    <label className="block text-sm sm:text-base font-bold text-slate-900">
+                      6. Género o sexo con el que te identificas <span className="text-xs font-normal text-slate-500">(Opcional)</span>
+                    </label>
+                    <p className="text-xs text-slate-500 mt-1 mb-3">
+                      Esta información nos permite generar reportes con perspectiva de inclusión y diversidad, exclusivamente para fines estadísticos y de impacto.
+                    </p>
+                    <div className="space-y-2.5">
+                      {opcionesGenero.map((opcion) => (
+                        <label key={opcion} className="flex items-center space-x-3 text-sm text-slate-700 cursor-pointer">
+                          <input
+                            type="radio"
+                            name="genero"
+                            value={opcion}
+                            checked={formData.genero === opcion}
+                            onChange={handleInputChange}
+                            className="w-4 h-4 text-blue-600 focus:ring-blue-500"
+                          />
+                          <span>{opcion}</span>
+                        </label>
+                      ))}
+                      {formData.genero === "Otros" && (
+                        <input
+                          type="text"
+                          name="generoOtro"
+                          value={formData.generoOtro}
+                          onChange={handleInputChange}
+                          placeholder="Especifica aquí..."
+                          className="mt-2 w-full bg-white border border-slate-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 rounded-xl px-4 py-2 text-sm outline-none transition-all"
+                        />
+                      )}
+                    </div>
+                  </div>
+
+                  {/* 7. Estado de la República */}
+                  <div className="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200/80">
+                    <label className="block text-sm sm:text-base font-bold text-slate-900">
+                      7. Estado de la República <span className="text-rose-600">*</span>
+                    </label>
+                    <p className="text-xs text-slate-500 mt-1 mb-3">
+                      Nos ayuda a identificar desde qué zonas se están uniendo más personas a la causa. Solo lo usaremos con fines estadísticos y de impacto comunitario.
+                    </p>
+                    <input
+                      type="text"
+                      name="estado"
+                      required
+                      value={formData.estado}
+                      onChange={handleInputChange}
+                      placeholder="Ej. Baja California"
+                      className="w-full bg-white border border-slate-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 rounded-xl px-4 py-2.5 text-sm outline-none transition-all"
+                    />
+                  </div>
+
+                  {/* 8. Municipio */}
+                  <div className="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200/80">
+                    <label className="block text-sm sm:text-base font-bold text-slate-900">
+                      8. Municipio <span className="text-rose-600">*</span>
+                    </label>
+                    <p className="text-xs text-slate-500 mt-1 mb-3">
+                      Nos ayuda a identificar desde qué zonas se están uniendo más personas a la causa. Solo lo usaremos con fines estadísticos y de impacto comunitario.
+                    </p>
+                    <input
+                      type="text"
+                      name="municipio"
+                      required
+                      value={formData.municipio}
+                      onChange={handleInputChange}
+                      placeholder="Ej. Tijuana"
+                      className="w-full bg-white border border-slate-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 rounded-xl px-4 py-2.5 text-sm outline-none transition-all"
+                    />
+                  </div>
+
+                  {/* 9. Colonia */}
+                  <div className="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200/80">
+                    <label className="block text-sm sm:text-base font-bold text-slate-900">
+                      9. Colonia <span className="text-rose-600">*</span>
+                    </label>
+                    <p className="text-xs text-slate-500 mt-1 mb-3">
+                      Nos ayuda a identificar desde qué zonas se están uniendo más personas a la causa. Solo lo usaremos con fines estadísticos y de impacto comunitario.
+                    </p>
+                    <input
+                      type="text"
+                      name="colonia"
+                      required
+                      value={formData.colonia}
+                      onChange={handleInputChange}
+                      placeholder="Nombre de tu colonia"
+                      className="w-full bg-white border border-slate-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 rounded-xl px-4 py-2.5 text-sm outline-none transition-all"
+                    />
+                  </div>
+
+                  {/* 10. Correo electrónico */}
+                  <div className="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200/80">
+                    <label className="block text-sm sm:text-base font-bold text-slate-900 mb-3">
+                      10. Correo electrónico <span className="text-rose-600">*</span>
+                    </label>
+                    <input
+                      type="email"
+                      name="correo"
+                      required
+                      value={formData.correo}
+                      onChange={handleInputChange}
+                      placeholder="tucorreo@ejemplo.com"
+                      className="w-full bg-white border border-slate-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 rounded-xl px-4 py-2.5 text-sm outline-none transition-all"
+                    />
+                  </div>
+
+                  {/* 11. Número de WhatsApp */}
+                  <div className="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200/80">
+                    <label className="block text-sm sm:text-base font-bold text-slate-900 mb-3">
+                      11. Número de WhatsApp <span className="text-rose-600">*</span>
+                    </label>
+                    <input
+                      type="tel"
+                      name="whatsapp"
+                      required
+                      value={formData.whatsapp}
+                      onChange={handleInputChange}
+                      placeholder="Ej. 6641234567"
+                      className="w-full bg-white border border-slate-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 rounded-xl px-4 py-2.5 text-sm outline-none transition-all"
+                    />
+                  </div>
+
+                  {/* 12. ¿Cómo te enteraste de esta actividad? */}
+                  <div className="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200/80">
+                    <label className="block text-sm sm:text-base font-bold text-slate-900 mb-3">
+                      12. ¿Cómo te enteraste de esta actividad? <span className="text-rose-600">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="comoTeEnteraste"
+                      required
+                      value={formData.comoTeEnteraste}
+                      onChange={handleInputChange}
+                      placeholder="Ej. Redes sociales, un amigo o familiar, página web..."
+                      className="w-full bg-white border border-slate-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 rounded-xl px-4 py-2.5 text-sm outline-none transition-all"
+                    />
+                  </div>
+
+                  {/* 13. ¿Cómo te gustaría mantenerte en contacto con nosotros? */}
+                  <div className="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200/80">
+                    <label className="block text-sm sm:text-base font-bold text-slate-900">
+                      13. ¿Cómo te gustaría mantenerte en contacto con nosotros? <span className="text-rose-600">*</span>
+                    </label>
+                    <p className="text-xs text-slate-500 mt-1 mb-3">
+                      (Puedes marcar más de una opción)
+                    </p>
+                    <div className="space-y-2.5">
+                      {opcionesContacto.map((opcion) => (
+                        <label key={opcion} className="flex items-center space-x-3 text-sm text-slate-700 cursor-pointer">
+                          <input
+                            type="checkbox"
+                            checked={formData.contacto.includes(opcion)}
+                            onChange={() => handleContactoToggle(opcion)}
+                            className="w-4 h-4 rounded text-blue-600 focus:ring-blue-500"
+                          />
+                          <span>{opcion}</span>
+                        </label>
+                      ))}
+                      {formData.contacto.includes("Otros") && (
+                        <input
+                          type="text"
+                          name="contactoOtro"
+                          value={formData.contactoOtro}
+                          onChange={handleInputChange}
+                          placeholder="Especifica otro medio de contacto..."
+                          className="mt-2 w-full bg-white border border-slate-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 rounded-xl px-4 py-2 text-sm outline-none transition-all"
+                        />
+                      )}
+                    </div>
+                  </div>
+
+                  {/* 14. Comentarios, ideas o algo que quieras compartir con nosotros (Opcional) */}
+                  <div className="bg-slate-50 p-4 sm:p-5 rounded-2xl border border-slate-200/80">
+                    <label className="block text-sm sm:text-base font-bold text-slate-900 mb-3">
+                      14. Comentarios, ideas o algo que quieras compartir con nosotros: <span className="text-xs font-normal text-slate-500">(Opcional)</span>
+                    </label>
+                    <textarea
+                      name="comentarios"
+                      rows={3}
+                      value={formData.comentarios}
+                      onChange={handleInputChange}
+                      placeholder="Escribe aquí tus comentarios o ideas..."
+                      className="w-full bg-white border border-slate-300 focus:border-blue-600 focus:ring-2 focus:ring-blue-600/20 rounded-xl px-4 py-2.5 text-sm outline-none transition-all"
+                    />
+                  </div>
+
+                  {/* Botón final para enviar registro */}
+                  <div className="pt-2 flex flex-col sm:flex-row items-center justify-end gap-3">
+                    <button
+                      type="button"
+                      onClick={closeRegistroModal}
+                      className="w-full sm:w-auto px-6 py-3 rounded-2xl border border-slate-300 text-slate-700 hover:bg-slate-100 text-sm font-semibold transition-colors cursor-pointer"
+                    >
+                      Cancelar
+                    </button>
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-bold px-8 py-3.5 rounded-2xl shadow-lg shadow-blue-600/25 transition-all text-sm cursor-pointer"
+                    >
+                      {isSubmitting ? "Enviando registro..." : "✅ Enviar mi registro"}
+                    </button>
+                  </div>
+                </form>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* MODAL LIGHTBOX DE GALERÍA */}
       {lightboxIndex !== null && (
