@@ -21,9 +21,6 @@ const whatsappUrl = "https://api.whatsapp.com/send?phone=+526644910531&text=Hola
 // Fecha objetivo: 12 de diciembre de 2026 a las 10:00 AM (Hora de Tijuana PST -08:00)
 const TARGET_DATE = new Date('2026-12-12T10:00:00-08:00').getTime();
 
-const PAYPAL_HOSTED_BUTTON_ID = "DKQJTK52VWM9S";
-const PAYPAL_CONTAINER_ID = `paypal-container-${PAYPAL_HOSTED_BUTTON_ID}`;
-
 // Historias emotivas asociadas a cada fotografía
 const galeriaHistorias = [
   {
@@ -95,35 +92,6 @@ export default function App() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
-
-  // Parte 2: Renderizar el botón hospedado de PayPal cuando el SDK esté listo
-  useEffect(() => {
-    let attempts = 0;
-    const maxAttempts = 40;
-
-    const tryRenderPayPal = () => {
-      const container = document.getElementById(PAYPAL_CONTAINER_ID);
-      if (container && window.paypal && typeof window.paypal.HostedButtons === 'function') {
-        container.innerHTML = '';
-        window.paypal.HostedButtons({
-          hostedButtonId: PAYPAL_HOSTED_BUTTON_ID
-        }).render(`#${PAYPAL_CONTAINER_ID}`);
-        return true;
-      }
-      return false;
-    };
-
-    if (tryRenderPayPal()) return;
-
-    const interval = setInterval(() => {
-      attempts += 1;
-      if (tryRenderPayPal() || attempts >= maxAttempts) {
-        clearInterval(interval);
-      }
-    }, 250);
-
-    return () => clearInterval(interval);
   }, []);
 
   useEffect(() => {
@@ -344,8 +312,8 @@ export default function App() {
               </ul>
             </div>
 
-            {/* Botones principales de participación */}
-            <div className="flex flex-wrap justify-center gap-4 mb-10">
+            {/* Botones de Acción */}
+            <div className="flex flex-wrap justify-center gap-4">
               <a 
                 href="https://forms.gle/4dv2DtafZyp1G6KVA" 
                 target="_blank" 
@@ -355,6 +323,14 @@ export default function App() {
                 <span>📝 Regístrate como Voluntario</span>
               </a>
               <a 
+                href="https://paypal.me/impactemosmx" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="bg-[#0070ba] hover:bg-[#005ea6] text-white font-bold px-6 py-3.5 rounded-2xl shadow-lg shadow-[#0070ba]/30 transition-all duration-300 text-sm flex items-center space-x-2"
+              >
+                <span>💳 Dona a través de PayPal</span>
+              </a>
+              <a 
                 href={whatsappUrl} 
                 target="_blank" 
                 rel="noopener noreferrer"
@@ -362,20 +338,6 @@ export default function App() {
               >
                 <span>💬 Mensaje a Kevin (Donación en Especie)</span>
               </a>
-            </div>
-
-            {/* Parte 2: Apartado directo de donación en PayPal */}
-            <div className="bg-white text-slate-900 rounded-2xl p-6 sm:p-8 max-w-md mx-auto shadow-2xl border border-white/20">
-              <p className="text-xs font-bold uppercase tracking-widest text-blue-700 mb-1">
-                Aportación Económica Directa
-              </p>
-              <h3 className="text-xl font-black text-slate-900 mb-2">
-                Dona con PayPal
-              </h3>
-              <p className="text-xs sm:text-sm text-slate-600 mb-5">
-                Ingresa el monto que desees aportar en MXN mediante PayPal, tarjeta de débito o crédito.
-              </p>
-              <div id={PAYPAL_CONTAINER_ID} className="w-full min-h-[120px] flex items-center justify-center"></div>
             </div>
           </div>
         </div>
